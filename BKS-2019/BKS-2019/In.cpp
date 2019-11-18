@@ -38,7 +38,7 @@ namespace In
 			else if (in.code[c] == IN::I) {
 				in.ignor++;
 			}
-			else if (in.code[c] == IN::T) {
+			else if (in.code[c] == IN::T || in.code[c] == IN::P || in.code[c] == IN::S) {
 				in.size++;
 			}
 
@@ -59,7 +59,7 @@ namespace In
 			else if (in.code[c] == IN::I) {
 
 			}
-			else if (in.code[c] == IN::T) {
+			else if (in.code[c] == IN::T || in.code[c] == IN::P || in.code[c] == IN::S) {
 				in.text[posSymb] = c;
 				posSymb++;
 			}

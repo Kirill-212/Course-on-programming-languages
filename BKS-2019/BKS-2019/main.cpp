@@ -23,7 +23,7 @@ int wmain(int argc, wchar_t* argv[]) {
 		//wcout << "-in:" << parm.in << ", -out" << parm.out << ", -log: " << parm.log << endl;
 		In::IN in = In::getin((wchar_t *)L"C:\\ycheba\\main_kyrsovoi\\Course-on-programming-languages\\test_project\\test1.txt");
 
-
+		cout << in.text << endl;
 		
 
 
