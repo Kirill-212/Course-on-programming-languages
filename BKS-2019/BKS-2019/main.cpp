@@ -5,6 +5,9 @@
 #include "Log.h"
 #include "In.h"
 #include <stack>
+#include"IT.h"
+#include"LT.h"
+#include"Lex.h"
 
 
 

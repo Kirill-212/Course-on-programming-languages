@@ -1,5 +1,12 @@
-﻿  In.cpp
-  Log.cpp
+﻿  IT.cpp
+  LEX.cpp
+c:\ycheba\main_kyrsovoi\course-on-programming-languages\bks-2019\bks-2019\lex.cpp(25): warning C4018: <=: несоответствие типов со знаком и без знака
+c:\ycheba\main_kyrsovoi\course-on-programming-languages\bks-2019\bks-2019\lex.cpp(53): warning C4018: <: несоответствие типов со знаком и без знака
+c:\ycheba\main_kyrsovoi\course-on-programming-languages\bks-2019\bks-2019\lex.cpp(93): warning C4018: <=: несоответствие типов со знаком и без знака
+c:\ycheba\main_kyrsovoi\course-on-programming-languages\bks-2019\bks-2019\lex.cpp(174): warning C4018: <=: несоответствие типов со знаком и без знака
+c:\ycheba\main_kyrsovoi\course-on-programming-languages\bks-2019\bks-2019\lex.cpp(223): warning C4305: аргумент: усечение из "int" в "char"
+c:\ycheba\main_kyrsovoi\course-on-programming-languages\bks-2019\bks-2019\lex.cpp(223): warning C4309: аргумент: усечение константного значения
+c:\ycheba\main_kyrsovoi\course-on-programming-languages\bks-2019\bks-2019\lex.cpp(342): warning C4101: value: неиспользованная локальная переменная
   main.cpp
   Создание кода...
   BKS-2019.vcxproj -> C:\ycheba\main_kyrsovoi\Course-on-programming-languages\BKS-2019\Debug\BKS-2019.exe
