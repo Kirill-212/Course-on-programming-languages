@@ -1,1 +1,23 @@
-::;;;;))(((vdfvdfvdfvdfvfbdv||||||||||||||
+
+' '  ''ergreg'' 'f'f ''
+'      gregrhreg'
+' fref      '
+declare'fewfewf'
+'fsfdsf'declare        integer'fff'  ''lox  merd''   mer1'fwefwwwwww'
+++++++(); 
++++ --- ***
+((())))
+{{{}}}}}
+;;;;;;
+
+
+
+
+
+
+ declare integer z;
+ z= x*( x + y );
+ return z;;
+};
+ 
+

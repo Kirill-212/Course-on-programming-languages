@@ -14,7 +14,7 @@
 using namespace std;
 
 
-int wmain(int argc, wchar_t* argv[]) {
+ int wmain(int argc, wchar_t* argv[]) {
 
 	setlocale(LC_ALL, "rus");
 	Log::LOG log = Log::INTLOG;
@@ -28,8 +28,8 @@ int wmain(int argc, wchar_t* argv[]) {
 
 		cout << in.text << endl;
 		
-
-
+		 Lex::Lex_analyz_new(in);
+		
 
 		//Log::WriteLine(log, "Тест:", "без ошибок", "");
 		//Log::WriteLog(log);

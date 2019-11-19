@@ -491,7 +491,140 @@ bool Lex::PolishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& 
 }
 
 
+Lex::Tables Lex::Lex_analyz_new(In::IN in) {
+	LT::LexTable LexTable = LT::Create();
+	IT::IdTable  IdTable = IT::Create();
+	Tables Tables = {};
+	char* word= new char[256];
+	int word_it = 0;
+	int i = 0;
+	while (in.text[i] != '\0')
+	{
+		 word_it = 0;
+		
+			if (in.code[in.text[i]] == in.P) {
+				i++;
+			}
+			else if (in.text[i] == '\'') {
+				word[word_it] = in.text[i];
+				word_it++;
+				i++;
+				if (in.text[i] == '\'') {
+					word[word_it] = in.text[i];
+					word_it++;
+					//i++;
+				}
+				else {
+					while (in.text[i] != '\'')
+					{
+						word[word_it] = in.text[i];
+						word_it++;
+						i++;
+						if (in.text[i] == '\'') {
+							word[word_it] = in.text[i];
+							word_it++;
 
+						}
+
+					}
+				}
+				word[word_it] = '\0';
+				cout << word << "|";
+				i++;
+			}//
+			else if (in.code[in.text[i]] == in.S) {
+				word[word_it] = in.text[i];
+				i++;
+				word_it++;
+				word[word_it] = '\0';
+				cout << word << "|";
+			}
+			else
+			{
+				while (in.code[in.text[i]] != in.S && in.code[in.text[i]] != in.P) {
+					word[word_it] = in.text[i];
+					i++;
+					word_it++;
+
+				}
+				word[word_it] = '\0';
+				cout << word <<"|";
+			}
+
+			
+		
+
+
+	//cout << word << endl;
+	//word = (char*)' ';
+	}
+		
+		
+	return Tables;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//In::IN Del_probel(In::IN in) {
+//	char* word;
+//	int word_it = 0;
+//	int i = 0;
+//	while (in.text[i] != '\0')
+//	{
+//		if (in.text[i] == '\'') {
+//			word[word_it] = in.text[i];
+//			word_it++;
+//			i++;
+//			while (in.text[i] != '\'')
+//			{
+//				word[word_it] = in.text[i];
+//				word_it++;
+//				i++;
+//			}
+//		}//
+//
+//
+////		if(){}
+//	}
+//}
 
 
 //void Lex::polish_notation(Lex::Tables td)

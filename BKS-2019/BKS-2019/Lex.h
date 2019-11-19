@@ -3,6 +3,7 @@
 #include "Log.h"
 #include "IT.h"
 #include"LT.h"
+#include"In.h"
 
 #define N_GRAPHS 12
 #define LIBFUNCTIONS 2
@@ -203,6 +204,7 @@ namespace Lex {
 
 
 
+
 	const char* del_probel(const char* s);
 
 	struct Machines
@@ -231,4 +233,7 @@ namespace Lex {
 	Word_array Create_word(const char* s);
 
 	Tables Lex_analyz(const char* s);
+	Tables Lex_analyz_new(In::IN g);
+
+	In::IN Del_probel(In::IN g);
 }
