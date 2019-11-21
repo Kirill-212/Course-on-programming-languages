@@ -1,23 +1,61 @@
-
-' '  ''ergreg'' 'f'f ''
-'      gregrhreg'
-' fref      '
-declare'fewfewf'
-'fsfdsf'declare        integer'fff'  ''lox  merd''   mer1'fwefwwwwww'
-++++++(); 
-+++ --- ***
-((())))
-{{{}}}}}
-;;;;;;
+	
+      dec  int function fs(int s,int q){
+	
+	 int z;
+	 z= s*( q + s );
+	 return z
+	};
 
 
+   dec	bool function sb(string s,string str2){
+		
+	
+	 if(s==str2){
+	return true;
+	};
+	return false;
+
+	};
+	
+
+	main{	
+  dec	int num;
+num=04646;
+
+	int col;
+	col=12345;
+
+	string lit;
+	lit='214224521';
+	string lit1;
+	lit1='control example';
+
+	int lent;
+	lent=Strlen(lit1);
+
+	int sa;
+	string str4;
+	str4='12345'
+	sa=StringToInt(str4)+10/1;
+
+	int res;
+	res=sa-col;
+
+	print(res);
+	print(str4);
+	bool fst3;
+	fst3=true;
+
+	if(res==col){
+
+	print(col);
+
+	};
 
 
 
 
- declare integer z;
- z= x*( x + y );
- return z;;
-};
- 
+	};
+	
+	
 

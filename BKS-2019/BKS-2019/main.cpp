@@ -28,9 +28,21 @@ using namespace std;
 
 		cout << in.text << endl;
 		
-		 Lex::Lex_analyz_new(in);
-		
+	Lex::Tables Tables =Lex::Lex_analyz_new(in);
+	int b = Tables.LexTable.table[0].sn;
+	std::cout << std::endl;
+	for (int i = 0; i < Tables.LexTable.size; i++) {
+		if (i == 0) {
+			std::cout << b << "|";
+		}
+		if (b != Tables.LexTable.table[i].sn) {
+			std::cout << std::endl;
+			b = Tables.LexTable.table[i].sn;
+			std::cout << b << "|";
+		}
+		std::cout << Tables.LexTable.table[i].lexema;
 
+	}
 		//Log::WriteLine(log, "Тест:", "без ошибок", "");
 		//Log::WriteLog(log);
 		//Log::WriteParm(log, parm);
