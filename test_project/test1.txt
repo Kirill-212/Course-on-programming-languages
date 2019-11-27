@@ -1,9 +1,12 @@
-	
-      dec  int function fs(int s,int q){
+
+ int a;
+a=32423o;
+ dec  int function fs(int s,int q){
 	
 	 int z;
 	 z= s*( q + s );
 	 return z
+	m;
 	};
 
 
@@ -20,7 +23,7 @@
 
 	main{	
   dec	int num;
-num=04646;
+num=04646o;
 
 	int col;
 	col=12345;
@@ -31,12 +34,12 @@ num=04646;
 	lit1='control example';
 
 	int lent;
-	lent=Strlen(lit1);
+	lent=strlen(lit1);
 
 	int sa;
 	string str4;
 	str4='12345'
-	sa=StringToInt(str4)+10/1;
+	sa=stringtoint(str4)+10/1;
 
 	int res;
 	res=sa-col;
@@ -56,6 +59,3 @@ num=04646;
 
 
 	};
-	
-	
-

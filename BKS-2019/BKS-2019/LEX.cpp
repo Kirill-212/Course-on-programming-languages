@@ -11,186 +11,185 @@ using namespace std;
 
 
 
-Lex::Word_array Lex::Create_word(const char* s) {
-
-	Lex::Word_array array = {};
-
-	int j = 0;
-	int k = 0;
-	int i = 0;
-	if (s[i] == ' ') i++;
-	int nwords = 0;
-
-	// подсчет слов входной строки.
-	for (int x = i; x <= strlen(s); x++) {
-		if (s[x] == '+' || s[x] == '-' || s[x] == '*' || s[x] == '/' || s[x] == '(' || s[x] == ')' || s[x] == '{' || s[x] == '}' || s[x] == ',' || s[x] == ';' || s[x] == '+' || s[x] == '=') {
-			if (s[x - 1] != '+' && s[x - 1] != '-' && s[x - 1] != '*' && s[x - 1] != '/' && s[x - 1] != '(' && s[x - 1] != ')' && s[x - 1] != '{' && s[x - 1] != '}' && s[x - 1] != ',' && s[x - 1] != ' ' && s[x - 1] != '\n' && s[x - 1] != ';' && s[x - 1] != '=')
-				nwords += 2;
-			else nwords++;
-		}
-
-		else if ((s[x] == ' ' || s[x] == '\n') && s[x + 1] != '\0')
-		{
-			if (s[x - 1] != '+' && s[x - 1] != '-' && s[x - 1] != '*' && s[x - 1] != '/' && s[x - 1] != '(' && s[x - 1] != ')' && s[x - 1] != '{' && s[x - 1] != '}' && s[x - 1] != ',' && s[x - 1] != ' ' && s[x - 1] != '\n' && s[x - 1] != ';' && s[x - 1] != '=')
-				nwords += 1;
-		}
-		else if (s[x] == '\'') {
-			x++;
-
-			while (s[x] != '\'') x++;
-		}
-		else if (s[x] == '\0') {
-			if (s[x - 1] != '+' && s[x - 1] != '-' && s[x - 1] != '*' && s[x - 1] != '/' && s[x - 1] != '(' && s[x - 1] != ')' && s[x - 1] != '{' && s[x - 1] != '}' && s[x - 1] != ',' && s[x - 1] != ' ' && s[x - 1] != '\n' && s[x - 1] != ';' && s[x - 1] != '=')
-				nwords += 1;
-			break;
-		}
-	}
-
-	// подсчет символов в каждом слове.
-	int *letters = new int[nwords];
-	int count = 0;
-	int index = 0;
-	for (int x = i; x < strlen(s) + 1; x++) {
-		count++;
-		if (s[x] == '+' || s[x] == '+' || s[x] == '-' || s[x] == '*' || s[x] == '/' || s[x] == '(' || s[x] == ')' || s[x] == '{' || s[x] == '}' || s[x] == ',' || s[x] == '=') {
-			letters[index] = count - 1;
-			count = 0;
-			index++;
-			letters[index] = 1;
-			index++;
-		}
-
-		if (s[x] == ' ' || s[x] == '\0') {
-			letters[index] = count - 1;
-			count = 0;
-			index++;
-		}
-
-		if (s[x] == '\'') {
-			count = 1;
-			x++;
-			while (s[x] != '\'') {
-				count++;
-				x++;
-			}
-			letters[index] = count;
-			count = 0;
-			index++;
-		}
-
-	}
-
-	array.sn = new int[nwords]; // номера строк каждого слова
-
-	// выделение памяти под массив слов
-	char ** word_array = new char *[nwords];
-	for (int z = 0; z < nwords; z++)
-		word_array[z] = new char(letters[z] + 1);
-
-	int ns = 1; // номер строки
-
-	// заполнение массива слов
-	for (i; i <= strlen(s); i++) {
-
-		if (s[i] == '\'') {
-			word_array[k][j] = s[i];
-			j++;
-			i++;
-			while (s[i] != '\'') {
-				word_array[k][j] = s[i];
-				j++;
-				i++;
-			}
-			word_array[k][j++] = s[i];
-			word_array[k][j] = '\0';
-		}
-
-		else if (s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/' || s[i] == '(' || s[i] == ')' || s[i] == '{' || s[i] == '}' || s[i] == ',' || s[i] == ';' || s[i] == '=') {
-			if (s[i - 1] != '+' && s[i - 1] != '-' && s[i - 1] != '*' && s[i - 1] != '/' && s[i - 1] != '(' && s[i - 1] != ')' && s[i - 1] != '{' && s[i - 1] != '}' && s[i - 1] != ',' && s[i - 1] != ';' && s[i - 1] != '\n' && s[i - 1] != ' ' && s[i - 1] != '=') {
-				array.sn[k] = ns;
-				word_array[k][j] = '\0';
-				k++;
-			}
-
-			j = 0;
-			array.sn[k] = ns;
-			word_array[k][j] = s[i];
-			word_array[k][j + 1] = '\0';
-			k++;
-		}
-		else if (s[i] == ' ') {
-			if (s[i - 1] != '+' && s[i - 1] != '-' && s[i - 1] != '*' && s[i - 1] != '/' && s[i - 1] != '(' && s[i - 1] != ')' && s[i - 1] != '{' && s[i - 1] != '}' && s[i - 1] != ',' && s[i - 1] != ';' && s[i - 1] != '\n' && s[i - 1] != ' ' && s[i - 1] != '=') {
-				array.sn[k] = ns;
-				word_array[k][j] = '\0';
-				k++;
-			}
-
-			j = 0;
-		}
-		else if (s[i] == '\n') {
-			if (s[i - 1] != '+' && s[i - 1] != '-' && s[i - 1] != '*' && s[i - 1] != '/' && s[i - 1] != '(' && s[i - 1] != ')' && s[i - 1] != '{' && s[i - 1] != '}' && s[i - 1] != ',' && s[i - 1] != ';' && s[i - 1] != '\n' && s[i - 1] != ' ' && s[i - 1] != '=') {
-				array.sn[k] = ns;
-				word_array[k][j] = '\0';
-				k++;
-			}
-			ns++;
-			j = 0;
-		}
-		else if (s[i] == '\0') {
-			if (s[i - 1] != '+' && s[i - 1] != '-' && s[i - 1] != '*' && s[i - 1] != '/' && s[i - 1] != '(' && s[i - 1] != ')' && s[i - 1] != '{' && s[i - 1] != '}' && s[i - 1] != ',' && s[i - 1] != ';' && s[i - 1] != '\n' && s[i - 1] != ' ' && s[i - 1] != '=') {
-				array.sn[k] = ns;
-				word_array[k][j] = '\0';
-				k++;
-			}
-			j = 0;
-		}
-		else {
-			word_array[k][j] = s[i];
-			j++;
-		}
-
-	}
-
-
-	array.array = word_array;
-	array.n = nwords;
-
-	for (int e = 0; e < nwords; e++) {
-		word_array[i] = nullptr;
-		delete[] word_array[i];
-	}
-	word_array = nullptr;
-	delete[] word_array;
-
-
-	return array;
-}
-
-const char*  Lex::del_probel(const char* s) {
-
-
-	char* text = new char[strlen(s) + 1];
-	int j = 0;
-	for (int i = 0; i <= strlen(s); i++) {
-
-		if (s[i] == ' ') {
-			while (s[i] == ' ') i++;
-			if (s[i] != '\n' && s[i] != '\0') text[j++] = s[i - 1];
-		}
-
-		if (s[i] == '\n' && s[i + 1] == '\0') i++;
-
-		if (s[i] == '\n' && (s[i + 1] == ' ' || s[i + 1] == '\n')) {
-			text[j++] = s[i];
-			i++;
-			while (s[i] == ' ' || s[i] == '\n') i++;
-		}
-		text[j] = s[i];
-		j++;
-	}
-	text[j] = '\0';
-	return text;
-}
+//Lex::Word_array Lex::Create_word(const char* s) {
+//
+//	Lex::Word_array array = {};
+//
+//	int j = 0;
+//	int k = 0;
+//	int i = 0;
+//	if (s[i] == ' ') i++;
+//	int nwords = 0;
+//
+//	// подсчет слов входной строки.
+//	for (int x = i; x <= strlen(s); x++) {
+//		if (s[x] == '+' || s[x] == '-' || s[x] == '*' || s[x] == '/' || s[x] == '(' || s[x] == ')' || s[x] == '{' || s[x] == '}' || s[x] == ',' || s[x] == ';' || s[x] == '+' || s[x] == '=') {
+//			if (s[x - 1] != '+' && s[x - 1] != '-' && s[x - 1] != '*' && s[x - 1] != '/' && s[x - 1] != '(' && s[x - 1] != ')' && s[x - 1] != '{' && s[x - 1] != '}' && s[x - 1] != ',' && s[x - 1] != ' ' && s[x - 1] != '\n' && s[x - 1] != ';' && s[x - 1] != '=')
+//				nwords += 2;
+//			else nwords++;
+//		}
+//
+//		else if ((s[x] == ' ' || s[x] == '\n') && s[x + 1] != '\0')
+//		{
+//			if (s[x - 1] != '+' && s[x - 1] != '-' && s[x - 1] != '*' && s[x - 1] != '/' && s[x - 1] != '(' && s[x - 1] != ')' && s[x - 1] != '{' && s[x - 1] != '}' && s[x - 1] != ',' && s[x - 1] != ' ' && s[x - 1] != '\n' && s[x - 1] != ';' && s[x - 1] != '=')
+//				nwords += 1;
+//		}
+//		else if (s[x] == '\'') {
+//			x++;
+//
+//			while (s[x] != '\'') x++;
+//		}
+//		else if (s[x] == '\0') {
+//			if (s[x - 1] != '+' && s[x - 1] != '-' && s[x - 1] != '*' && s[x - 1] != '/' && s[x - 1] != '(' && s[x - 1] != ')' && s[x - 1] != '{' && s[x - 1] != '}' && s[x - 1] != ',' && s[x - 1] != ' ' && s[x - 1] != '\n' && s[x - 1] != ';' && s[x - 1] != '=')
+//				nwords += 1;
+//			break;
+//		}
+//	}
+//
+//	// подсчет символов в каждом слове.
+//	int *letters = new int[nwords];
+//	int count = 0;
+//	int index = 0;
+//	for (int x = i; x < strlen(s) + 1; x++) {
+//		count++;
+//		if (s[x] == '+' || s[x] == '+' || s[x] == '-' || s[x] == '*' || s[x] == '/' || s[x] == '(' || s[x] == ')' || s[x] == '{' || s[x] == '}' || s[x] == ',' || s[x] == '=') {
+//			letters[index] = count - 1;
+//			count = 0;
+//			index++;
+//			letters[index] = 1;
+//			index++;
+//		}
+//
+//		if (s[x] == ' ' || s[x] == '\0') {
+//			letters[index] = count - 1;
+//			count = 0;
+//			index++;
+//		}
+//
+//		if (s[x] == '\'') {
+//			count = 1;
+//			x++;
+//			while (s[x] != '\'') {
+//				count++;
+//				x++;
+//			}
+//			letters[index] = count;
+//			count = 0;
+//			index++;
+//		}
+//
+//	}
+//
+//	array.sn = new int[nwords]; // номера строк каждого слова
+//
+//	// выделение памяти под массив слов
+//	char ** word_array = new char *[nwords];
+//	for (int z = 0; z < nwords; z++)
+//		word_array[z] = new char(letters[z] + 1);
+//
+//	int ns = 1; // номер строки
+//
+//	// заполнение массива слов
+//	for (i; i <= strlen(s); i++) {
+//
+//		if (s[i] == '\'') {
+//			word_array[k][j] = s[i];
+//			j++;
+//			i++;
+//			while (s[i] != '\'') {
+//				word_array[k][j] = s[i];
+//				j++;
+//				i++;
+//			}
+//			word_array[k][j++] = s[i];
+//			word_array[k][j] = '\0';
+//		}
+//
+//		else if (s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/' || s[i] == '(' || s[i] == ')' || s[i] == '{' || s[i] == '}' || s[i] == ',' || s[i] == ';' || s[i] == '=') {
+//			if (s[i - 1] != '+' && s[i - 1] != '-' && s[i - 1] != '*' && s[i - 1] != '/' && s[i - 1] != '(' && s[i - 1] != ')' && s[i - 1] != '{' && s[i - 1] != '}' && s[i - 1] != ',' && s[i - 1] != ';' && s[i - 1] != '\n' && s[i - 1] != ' ' && s[i - 1] != '=') {
+//				array.sn[k] = ns;
+//				word_array[k][j] = '\0';
+//				k++;
+//			}
+//
+//			j = 0;
+//			array.sn[k] = ns;
+//			word_array[k][j] = s[i];
+//			word_array[k][j + 1] = '\0';
+//			k++;
+//		}
+//		else if (s[i] == ' ') {
+//			if (s[i - 1] != '+' && s[i - 1] != '-' && s[i - 1] != '*' && s[i - 1] != '/' && s[i - 1] != '(' && s[i - 1] != ')' && s[i - 1] != '{' && s[i - 1] != '}' && s[i - 1] != ',' && s[i - 1] != ';' && s[i - 1] != '\n' && s[i - 1] != ' ' && s[i - 1] != '=') {
+//				array.sn[k] = ns;
+//				word_array[k][j] = '\0';
+//				k++;
+//			}
+//
+//			j = 0;
+//		}
+//		else if (s[i] == '\n') {
+//			if (s[i - 1] != '+' && s[i - 1] != '-' && s[i - 1] != '*' && s[i - 1] != '/' && s[i - 1] != '(' && s[i - 1] != ')' && s[i - 1] != '{' && s[i - 1] != '}' && s[i - 1] != ',' && s[i - 1] != ';' && s[i - 1] != '\n' && s[i - 1] != ' ' && s[i - 1] != '=') {
+//				array.sn[k] = ns;
+//				word_array[k][j] = '\0';
+//				k++;
+//			}
+//			ns++;
+//			j = 0;
+//		}
+//		else if (s[i] == '\0') {
+//			if (s[i - 1] != '+' && s[i - 1] != '-' && s[i - 1] != '*' && s[i - 1] != '/' && s[i - 1] != '(' && s[i - 1] != ')' && s[i - 1] != '{' && s[i - 1] != '}' && s[i - 1] != ',' && s[i - 1] != ';' && s[i - 1] != '\n' && s[i - 1] != ' ' && s[i - 1] != '=') {
+//				array.sn[k] = ns;
+//				word_array[k][j] = '\0';
+//				k++;
+//			}
+//			j = 0;
+//		}
+//		else {
+//			word_array[k][j] = s[i];
+//			j++;
+//		}
+//
+//	}
+//
+//
+//	array.array = word_array;
+//	array.n = nwords;
+//
+//	for (int e = 0; e < nwords; e++) {
+//		word_array[i] = nullptr;
+//		delete[] word_array[i];
+//	}
+//	word_array = nullptr;
+//	delete[] word_array;
+//
+//
+//	return array;
+//}
+//const char*  Lex::del_probel(const char* s) {
+//
+//
+//	char* text = new char[strlen(s) + 1];
+//	int j = 0;
+//	for (int i = 0; i <= strlen(s); i++) {
+//
+//		if (s[i] == ' ') {
+//			while (s[i] == ' ') i++;
+//			if (s[i] != '\n' && s[i] != '\0') text[j++] = s[i - 1];
+//		}
+//
+//		if (s[i] == '\n' && s[i + 1] == '\0') i++;
+//
+//		if (s[i] == '\n' && (s[i + 1] == ' ' || s[i + 1] == '\n')) {
+//			text[j++] = s[i];
+//			i++;
+//			while (s[i] == ' ' || s[i] == '\n') i++;
+//		}
+//		text[j] = s[i];
+//		j++;
+//	}
+//	text[j] = '\0';
+//	return text;
+//}
 
 
 //
@@ -492,7 +491,9 @@ bool Lex::PolishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& 
 
 
 Lex::Tables Lex::Lex_analyz_new(In::IN in) {
-	
+	char LibFunc[2][225] = { "stringtoint", "strlen" };
+	bool libflag = 0;
+	int m = 0;
 	LT::LexTable LexTable = LT::Create();
 	IT::IdTable  IdTable = IT::Create();
 	Tables Tables = {};
@@ -509,7 +510,7 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 		{LEX_RETURN            , FST::FST GRAPH_return			         },//10
 		{LEX_TRUE         , FST::FST GRAPH_true						     },//11
 		{LEX_FALSE            , FST::FST GRAPH_false				     },//12	
-	    {LEX_EQUAL_IF            , FST::FST GRAPH_EQUAL_IF				 },//7		
+		{LEX_EQUAL_IF            , FST::FST GRAPH_EQUAL_IF				 },//7		
 		{LEX_SEMICOLON            , FST::FST GRAPH_SEMICOLON			 },//17
 		{LEX_COMMA            , FST::FST GRAPH_COMMA					 },//18
 		{LEX_LEFTBRACE            , FST::FST GRAPH_LEFTBRCE			     },//19
@@ -521,112 +522,247 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 		{LEX_STAR           , FST::FST GRAPH_START						 },//25
 		{LEX_DIRSLASH           , FST::FST GRAPH_DIRSLASH			     },//26
 		{LEX_EQUAL         , FST::FST GRAPH_EQUAL					     },//27
-		{LEX_PERSENT           , FST::FST GRAPH_PERSENT				     },//28
-	    {LEX_ID           , FST::FST GRAPH_id							 },//15	
-	    {LEX_LITERAL            , FST::FST GRAPH_integer_literal10       },//13
+		{LEX_PERSENT           , FST::FST GRAPH_PERSENT				     },//28		
+		{LEX_LITERAL            , FST::FST GRAPH_integer_literal10       },//13
 		{LEX_LITERAL         , FST::FST GRAPH_integer_literal8           },//14
-	    {LEX_LITERAL        , FST::FST GRAPH_string_literal				 },//16
-		
+		{LEX_LITERAL        , FST::FST GRAPH_string_literal				 },//16
+		{LEX_ID           , FST::FST GRAPH_id							 },//15	
 
 	};
 	int sn = 0;
+	int pos_LT = 0;
 	int indexLT = 0;
-	char* word= new char[256];
+	char* word = new char[256];
+	char* id = new char[256];
 	int word_it = 0;
 	int i = 0;
-	bool flag = false;
+	bool flag_in_word = false;
+	bool flag_error = false;
 
+	//
+	int index_lit = 0;
+	int indexIT = 0;
+	IT::IDDATATYPE iddatatype = IT::NODEF;
+	IT::IDTYPE idtype = IT::V;
+	bool parflag = 0;
+	bool functionflag = 0;
+	bool flag_main = false;
+	//для выражений
+	bool Pflag = 0;
+	int pos = 0;
+	char * prefix = (char *)"";
+	//char * id;
+	stack <char*> st;
 	while (in.text[i] != '\0')
 	{
 		word_it = 0;
 		if (in.text[i] == '\n') {
-			i++;			
-			indexLT++;			
-		}	
+			i++;
+			indexLT++;	//номер строки
+			pos_LT = 0;
+			flag_error = true;
+		}
 		else if (in.code[in.text[i]] == in.P) {
 			i++;
-			if (in.text[i] == '\n') {
-				indexLT++;
-			}
+			flag_error = true;
 		}
-			else if (in.text[i] == '\'') {
+		else if (in.text[i] == '\'') {
+			word[word_it] = in.text[i];
+			word_it++;
+			i++;
+			if (in.text[i] == '\'') {
 				word[word_it] = in.text[i];
 				word_it++;
-				i++;
-				if (in.text[i] == '\'') {
+				//i++;
+				pos_LT++;
+			}
+			else {
+				while (in.text[i] != '\'')
+				{
 					word[word_it] = in.text[i];
 					word_it++;
-					//i++;
-				}
-				else {
-					while (in.text[i] != '\'')
-					{
+					i++;
+					if (in.text[i] == '\'') {
 						word[word_it] = in.text[i];
 						word_it++;
-						i++;
-						if (in.text[i] == '\'') {
-							word[word_it] = in.text[i];
-							word_it++;
-
-						}
 
 					}
+
 				}
-				word[word_it] = '\0';
+			}
+			word[word_it] = '\0';
 			//	cout << word << "|";
-				i++;
-				flag = true;
-				sn++;
-			}//
-			else if (in.code[in.text[i]] == in.S) {
+			i++;
+			flag_in_word = true;
+			sn++;
+		}//
+		else if (in.code[in.text[i]] == in.S) {
+			word[word_it] = in.text[i];
+			i++;
+			word_it++;
+			word[word_it] = '\0';
+			flag_in_word = true;
+			//sn++;
+			pos_LT++;
+			//cout << word << "|";
+		}
+		else
+		{
+			while (in.code[in.text[i]] != in.S && in.code[in.text[i]] != in.P) {
 				word[word_it] = in.text[i];
 				i++;
 				word_it++;
-				word[word_it] = '\0';
-				flag = true;
-				sn++;
-				//cout << word << "|";
-			}
-			else
-			{
-				while (in.code[in.text[i]] != in.S && in.code[in.text[i]] != in.P) {
-					word[word_it] = in.text[i];
-					i++;
-					word_it++;
 
+			}
+			word[word_it] = '\0';
+			flag_in_word = true;
+			//sn++;
+			pos_LT++;
+			//cout << word <<"|";
+		}
+		if (flag_in_word) {
+			flag_error = true;
+			for (m = 0; m < N_GRAPHS; m++) {
+				if (FST::execute(machines[m].machine, word))
+				{
+					LT::Entry lt = { machines[m].lexema ,indexLT,pos_LT };
+					LT::Add(LexTable, lt);
+					flag_error = true;
+					break;
 				}
-				word[word_it] = '\0';
-				flag = true;
-				sn++;
-				//cout << word <<"|";
+				else {
+					flag_error = false;
+				}
 			}
-			if (flag) {
-				for (int m = 0; m < N_GRAPHS; m++) {
-					if (FST::execute(machines[m].machine, word))
-					{
+			if (strcmp(word, "int") == 0)iddatatype = IT::INT;
+			else if (strcmp(word, "string") == 0)iddatatype = IT::STR;
+			else if (strcmp(word, "bool") == 0)iddatatype = IT::BOOL;
+			else if (strcmp(word, "function") == 0)idtype = IT::F;
+			else if (strcmp(word, "main") == 0) {
+				st.push(word);
+				//idtype = IT::F;
+				flag_main = true;
+			}
+			else if (idtype == IT::F && machines[m].lexema == 'i') {
+				
+					id = word;
+					if (!IT::IsId(IdTable, id)) {
+						st.push(word);
+						IT::Entry it = { LexTable.size,id , iddatatype, idtype, 0 };
+						IT::Add(IdTable, it);
 
-
-						LT::Entry lt = { machines[m].lexema ,indexLT };
-										LT::Add(LexTable, lt);
-						break;
 					}
-					else
-					{
+					//доб в табл идентификаторов				
+			}
+			else if (strcmp(word, "(") == 0 && idtype == IT::F) {
+				idtype = IT::P;
+			}
+			else if (idtype == IT::P && strcmp(word, ")") == 0) {
+				idtype = IT::V;
+			}
+			else if (machines[m].lexema == 'l' || machines[m].lexema == 'T'|| machines[m].lexema == 'F') {
+				if (!st.empty()) {
+					id = word;
+					
+
+					//IT::Entry it;
+					if (m==24) {
+						IT::Entry it = { LexTable.size, id , IT::INT, IT::L, 0};
+						IT::Add(IdTable, it);
+				
+					}
+					else if ( m == 25 ) {
+						IT::Entry it = { LexTable.size, id , IT::INT, IT::L, 0 };
+						IT::Add(IdTable, it);
+
+					}
+					
+					else if (strcmp(id,"true")==0) {
+						IT::Entry it = { LexTable.size, id , IT::BOOL, IT::L, true };
+						IT::Add(IdTable, it);
+					
+					}
+					else if (strcmp(id, "false") == 0) {
+						IT::Entry it = { LexTable.size, id , IT::BOOL, IT::L, false };
+						IT::Add(IdTable, it);
+					
+					}
+					else if (m==26) {
+						IT::Entry it = { LexTable.size, id , IT::STR, IT::L, 0 };
+						it.value.vstr = { (int)strlen(word) , word };
+						IT::Add(IdTable, it);
 						
 					}
+					//iddatatype = IT::NODEF;
+				}
+				else {
+					cout << "пошёл нахуй" << endl;
+				}
 
+				
+			//	IT::Add(IdTable, it);
+			}
+			else if (machines[m].lexema == 'i') {
+				if (!st.empty()) {
+					if (idtype == IT::F || idtype == IT::P) {					
+							id = word;
+							strcat(id, "_");
+							strcat(id, st.top());
+							if (!IT::IsId(IdTable, id)) {
+								IT::Entry it = { LexTable.size, id , iddatatype, idtype, 0 };
+								IT::Add(IdTable, it);
+								//iddatatype = IT::NODEF;
+							}										
+					}
+					else if (idtype == IT::V) {
+						id = word;
 
+						strcat(id, "_");
+						strcat(id, st.top());
+						if (!IT::IsId(IdTable, id)) {
 
+							IT::Entry it = { LexTable.size, id , iddatatype, idtype, 0 };
+							IT::Add(IdTable, it);
+							//iddatatype = IT::NODEF;
+						}
+					}
+				}
+				else
+				{
+					cout << "пошёл нахуй" << endl;
 				}
 			}
-		
+		}
 
-			flag = false;
+
+
+
+
+
+
+
+
+		if (!flag_error) {
+			Error::ERROR error = Error::geterrorin(113, indexLT, pos_LT);
+			throw error;
+			break;
+		}
+		
+		word = NULL;
+		word = new char[256];
+		flag_in_word = false;
+		flag_error = false;
+
+
 	}
+
+	
+
 	
 		Tables.LexTable = LexTable;
-//	Tables.idTable = IdTable;
+        Tables.idTable = IdTable;
 	return Tables;
+	
 }
 
 
