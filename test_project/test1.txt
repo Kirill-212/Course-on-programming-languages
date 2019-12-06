@@ -25,7 +25,7 @@ dec string sms4;
 
   bool function sb(string s,string str2){
 		dec int qw;
-qw=fs21(3,'1');
+qw=fs21(3,4);
 	dec bool fst1;
 	 if(fst1){
 	dec int swe;

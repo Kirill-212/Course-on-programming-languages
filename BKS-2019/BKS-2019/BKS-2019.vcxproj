@@ -127,6 +127,7 @@
     <ClInclude Include="LT.h" />
     <ClInclude Include="MFST.h" />
     <ClInclude Include="Parm.h" />
+    <ClInclude Include="PN.h" />
     <ClInclude Include="Rule.h" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +142,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MFST.cpp" />
     <ClCompile Include="Parm.cpp" />
+    <ClCompile Include="PN.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

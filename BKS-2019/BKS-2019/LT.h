@@ -34,8 +34,8 @@ namespace LT {
 
 	struct Entry {
 		char lexema; // лексема
-		int sn;	
-		int indexLT;					 // номер строки
+		int sn;// номер строки	
+		int indexLT;					 
 		int idxTI;					 // индекс в таблице индентификаторов	
 		char value;
 	};

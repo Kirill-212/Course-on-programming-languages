@@ -10,7 +10,7 @@
 #include <stack>
 #include"GRB.h"
 #include"MFST.h"
-
+#include"PN.h"
 
 
 using namespace std;
@@ -82,9 +82,31 @@ using namespace std;
 		MFST::Mfst mfst(Tables, GRB::getGreibach());
 	mfst.start();//анализ1
 	mfst.printrules();
+
+
+
 	Lex::Sem_analiz(Tables);
 
 
+	PN::polish_notation(Tables);
+
+
+
+	b = Tables.LexTable.table[0].sn;
+	cout << std::endl;
+	for (int i = 0; i < Tables.LexTable.size; i++) {
+		if (i == 0) {
+			std::cout << b << "|";
+		}
+		if (b != Tables.LexTable.table[i].sn) {
+			std::cout << std::endl;
+			b = Tables.LexTable.table[i].sn;
+			std::cout << b << "|";
+		}
+		cout << Tables.LexTable.table[i].lexema ;
+
+	}
+	cout << endl;
 
 	//cout << endl;
 	//	char* iddatatype;
