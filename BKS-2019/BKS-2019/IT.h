@@ -22,7 +22,7 @@ namespace IT {
 			int vint;							// значение integer
 			struct {
 				int len;						// количество символов в string
-				char* str;	                    // cимволы string
+				char* str;                    // cимволы string
 			}vstr;								// значение string
 			bool T_F;                           //значение bool
 		}value;									 // значение идентификатора
@@ -41,7 +41,7 @@ namespace IT {
 
 	Entry GetEntry(IdTable& idtable, int n);
 
-	bool IsId(IdTable& idtable, char id[ID_MAXSIZE]); // есть ли индентификатор в таблице
+	int IsId(IdTable& idtable, char id[ID_MAXSIZE]); // есть ли индентификатор в таблице
 
 	void Delete(IdTable& idtable);
 }

@@ -4,10 +4,12 @@
 #include "Parm.h"
 #include "Log.h"
 #include "In.h"
+#include "FST.h"
+#include "LT.h"
+#include "LEX.h"
 #include <stack>
-#include"IT.h"
-#include"LT.h"
-#include"Lex.h"
+#include"GRB.h"
+#include"MFST.h"
 
 
 
@@ -29,6 +31,7 @@ using namespace std;
 		cout << in.text << endl;
 		
 	Lex::Tables Tables =Lex::Lex_analyz_new(in);
+	
 	int b = Tables.LexTable.table[0].sn;
 	std::cout << std::endl;
 	for (int i = 0; i < Tables.LexTable.size; i++) {
@@ -44,10 +47,42 @@ using namespace std;
 
 	}
 	cout << endl;
+	b = Tables.LexTable.table[0].sn;
+	cout << std::endl;
+	for (int i = 0; i < Tables.LexTable.size; i++) {
+		if (i == 0) {
+			std::cout << b << "|";
+		}
+		if (b != Tables.LexTable.table[i].sn) {
+			std::cout << std::endl;
+			b = Tables.LexTable.table[i].sn;
+			std::cout << b << "|";
+		}
+		cout << Tables.LexTable.table[i].lexema << "[" << Tables.LexTable.table[i].idxTI <<"]" ;
+
+	}
+	cout << endl;
+
+
+
+
+
+
+
+
+
 	for (int i = 0; i < Tables.idTable.size;i++) {
 		cout << Tables.idTable.table[i].id <<"            "<< Tables.idTable.table[i].iddatatype << "            " << Tables.idTable.table[i].idtype<< endl;
 	}
+
+	cout << endl;
+	cout << endl;
 	///cout << Tables.idTable.table[0].id;
+	MFST_TRACE_START//отладка
+		MFST::Mfst mfst(Tables, GRB::getGreibach());
+	mfst.start();//анализ1
+	mfst.printrules();
+	Lex::Sem_analiz(Tables);
 
 
 

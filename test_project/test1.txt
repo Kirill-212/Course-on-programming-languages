@@ -1,52 +1,77 @@
 
- int a;
-a=32423o;
- dec  int function fs(int s,int q){
+ int function fs(int s,int q){
 	
-	 int z;
+	if(3==4){
+	dec int s2trr;
+};
+	 dec int z;
+	 z= s*( q + 4 );
+	 return 4;
+	
+	};
+int function fs21(int s,int q){
+	
+	 dec int z;
+	dec int sms1;
+dec string sms5;
+dec string sms4;
+	z=3;
+	sms1=fs(3,4)+22;
 	 z= s*( q + s );
-	 return z
-	m;
+	 return 4;
+	
 	};
 
 
-   dec	bool function sb(string s,string str2){
-		
-	
-	 if(s==str2){
-	return true;
+  bool function sb(string s,string str2){
+		dec int qw;
+qw=fs21(3,'1');
+	dec bool fst1;
+	 if(fst1){
+	dec int swe;
 	};
 	return false;
-
-	};
 	
+	};
+int function qs(int s,int q){
+	dec bool rc;
+	rc=true;
+	return 1;
+};
+
+int function q1s(bool s,int q){
+	dec bool rc;
+	dec int m;
+	m=10;
+	return m;
+};
 
 	main{	
-  dec	int num;
-num=04646o;
+	  dec	int num;
+	num=04646o;
 
-	int col;
+	dec int col;
 	col=12345;
 
-	string lit;
+	dec string lit;
 	lit='214224521';
-	string lit1;
+	dec string lit1;
 	lit1='control example';
 
-	int lent;
-	lent=strlen(lit1);
+	dec int lent;
+	lent=1;
 
-	int sa;
-	string str4;
-	str4='12345'
-	sa=stringtoint(str4)+10/1;
+	dec int sa;
+	dec string str4;
+	str4='12345';
+	sa=3+10/1;
 
-	int res;
+	dec int res;
 	res=sa-col;
 
 	print(res);
 	print(str4);
-	bool fst3;
+	dec bool fst3;
 	fst3=true;
 
 	if(res==col){
@@ -55,7 +80,7 @@ num=04646o;
 
 	};
 
-
+dec int years;
 
 
 	};

@@ -4,7 +4,7 @@
 #include "IT.h"
 #include"LT.h"
 #include"In.h"
-
+#include<vector>
 #define N_GRAPHS 28
 #define LIBFUNCTIONS 2
 
@@ -259,7 +259,10 @@ namespace Lex {
 		char lexema;
 		FST::FST machine;
 	};
-
+	struct Par_function {
+		int indxLT;
+		std::vector<IT::IDDATATYPE> type;
+	};
 	struct Word_array
 	{
 		char ** array;		// массив слов
@@ -277,10 +280,12 @@ namespace Lex {
 	bool PolishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtable);
 	//void polish_notation(Lex::Tables td);
 
+	void Sem_analiz(Tables table);
 	Word_array Create_word(const char* s);
 
 	Tables Lex_analyz(const char* s);
 	Tables Lex_analyz_new(In::IN g);
 
 	In::IN Del_probel(In::IN g);
+	int ret_index_for_expression(int pos, std::vector<Lex::Par_function> par_func);
 }

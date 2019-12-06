@@ -6,6 +6,7 @@
 #include "Log.h"
 #include <stack>
 #include <queue>
+#include <vector>
 
 using namespace std;
 
@@ -489,6 +490,207 @@ bool Lex::PolishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& 
 	return 1;
 }
 
+int Lex::ret_index_for_expression(int pos, std::vector<Lex::Par_function> par_func) {
+	//cout <<pos << "  ff     позици€" << endl;
+	for (int i = 0; i < par_func.size(); i++) {
+		//cout << par_func[i].indxLT << "       позици€"<<endl;
+		if (pos == par_func[i].indxLT) {
+			return pos;
+		}
+	}
+	return -1;
+	
+}
+
+void Lex::Sem_analiz(Lex::Tables table) {
+	Lex::Par_function par_function;
+	std::vector<Lex::Par_function> par_func;
+	int pos_in_vector = 0;
+	int pos_expression = 0;
+	int par_vs_funcr = 0;
+	int index = 0;
+	int pos_function_for_return = 0;
+	int pos_function_for_r_i = 0;
+	bool flagfunction = false;
+	bool flag_par_function = false;
+	bool flag_expression = false;
+	int m;
+	int q;
+	int count = 0;
+	for (int i = 0; i < table.LexTable.size; i++) {
+
+		if (table.LexTable.table[i].lexema == 'f') {
+			flagfunction = true;
+			pos_function_for_return = i + 1;
+		}
+		else if (flag_expression && table.LexTable.table[i].lexema == ';') {
+			flag_expression = false;
+		}
+		else if (table.LexTable.table[i].lexema == '?') {//проверка на типы if
+
+			if (table.idTable.table[table.LexTable.table[i + 4].idxTI].iddatatype != IT::INT || table.idTable.table[table.LexTable.table[i + 2].idxTI].iddatatype != IT::INT) {
+				if (table.LexTable.table[i+2].lexema != 'T' || table.LexTable.table[i+2].lexema != 'F') {
+					if (table.idTable.table[table.LexTable.table[i + 2].idxTI].iddatatype != IT::BOOL) {
+					Error::ERROR error = Error::geterrorin(119, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
+					throw error;
+					}
+				}
+				
+			}
+			
+
+			
+		}
+		else if (flag_expression && table.LexTable.table[i].lexema == 'i' && table.LexTable.table[i + 1].lexema == '(') {
+			pos_in_vector = ret_index_for_expression(table.LexTable.table[i].idxTI, par_func);
+		//	cout << table.idTable.table[table.LexTable.table[pos_expression].idxTI].id << endl;
+			//cout << table.idTable.table[pos_in_vector].id << endl;
+			if (table.idTable.table[table.LexTable.table[pos_expression].idxTI].iddatatype!= table.idTable.table[pos_in_vector].iddatatype ) {
+				Error::ERROR error = Error::geterrorin(117, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
+				throw error;
+			}
+				
+			for (m = 0; m < par_func.size(); m++) {
+				if (pos_in_vector == par_func[m].indxLT) {
+					break;
+				}
+			}
+				for (q = i+1; i < table.LexTable.size; q++) {
+					if (par_func[m].type.size() < par_vs_funcr) {
+
+						Error::ERROR error = Error::geterrorin(118, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
+						throw error;
+					}
+					if (table.LexTable.table[q].lexema == 'i') {
+						if (par_func[m].type.size() == par_vs_funcr) {
+							
+							Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
+							throw error;
+						}
+						if (table.idTable.table[table.LexTable.table[q].idxTI].iddatatype != par_func[m].type[par_vs_funcr]) {//
+							Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
+							throw error;
+						}
+						else {
+							par_vs_funcr++;
+						}
+					}
+					else if (table.LexTable.table[q].lexema == 'l' || table.LexTable.table[q].lexema == 'T' || table.LexTable.table[q].lexema == 'F') {
+						if (par_func[m].type.size() == par_vs_funcr) {
+
+							Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
+							throw error;
+						}
+						if (table.idTable.table[table.LexTable.table[q].idxTI].iddatatype != par_func[m].type[par_vs_funcr]) {
+							Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
+							throw error;
+						}
+						else {
+							par_vs_funcr++;
+						}
+					}
+					else if (table.LexTable.table[q].lexema == ')') {
+						if (par_func[m].type.size() > par_vs_funcr) {
+
+							Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
+							throw error;
+						}
+						break;
+					}
+					//par_vs_funcr++;
+				}
+				i = q;
+				par_vs_funcr = 0;
+			
+		}
+		else if (flag_expression && table.LexTable.table[i].lexema == 'i' &&table.LexTable.table[i+1].lexema == 'v') {
+			for (q = i + 1; i < table.LexTable.size; q++) {
+				if (table.idTable.table[table.LexTable.table[q].idxTI].iddatatype != IT::INT) {
+					Error::ERROR error = Error::geterrorin(129, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
+					throw error;
+				}
+				else if (table.LexTable.table[q].lexema == ';') {
+					break;
+				}
+			}
+			i = q;
+		}
+		else if (flag_expression && (table.LexTable.table[i].lexema == 'i'|| table.LexTable.table[i].lexema == 'T'|| table.LexTable.table[i].lexema == 'F'|| table.LexTable.table[i].lexema == 'l')) {
+			if (table.LexTable.table[i].lexema == 'F' || table.LexTable.table[i].lexema == 'T') {
+				if (table.idTable.table[table.LexTable.table[pos_expression].idxTI].iddatatype != IT::BOOL) {
+					Error::ERROR error = Error::geterrorin(117, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
+					throw error;
+				}
+			}
+			else if (table.idTable.table[table.LexTable.table[pos_expression].idxTI].iddatatype != table.idTable.table[table.LexTable.table[i].idxTI].iddatatype) {
+				Error::ERROR error = Error::geterrorin(117, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
+				throw error;
+			}
+		}
+		else if (table.LexTable.table[i].lexema == '(' && table.LexTable.table[i - 1].lexema == 'i'&&table.LexTable.table[i - 2].lexema == 'f') {
+			flag_par_function = true;
+			par_function.indxLT = table.LexTable.table[i-1].idxTI;
+		}
+		
+		else if (flag_par_function && table.LexTable.table[i].lexema == ')') {
+			par_func.push_back(par_function);
+			par_function = {};
+			flag_par_function = false;
+		}
+		else if (flag_par_function &&table.LexTable.table[i].lexema == 'i') {			
+			par_function.type.push_back(table.idTable.table[table.LexTable.table[i].idxTI].iddatatype);
+		}
+
+		else if (!flag_par_function &&table.LexTable.table[i].lexema == 'i' &&table.LexTable.table[i + 1].lexema == '=') {
+			pos_expression = i;
+			flag_expression = true;
+		}
+
+		else if (table.LexTable.table[i].lexema == '}' && flagfunction) {
+			flagfunction = false;
+		}
+		else if (table.LexTable.table[i].lexema == 'r') {
+			pos_function_for_r_i = i + 1;
+			 if (table.LexTable.table[pos_function_for_r_i].lexema == 'T') {
+				if (table.idTable.table[table.LexTable.table[pos_function_for_return].idxTI].iddatatype != IT::BOOL) {
+					Error::ERROR error = Error::geterrorin(116, table.LexTable.table[pos_function_for_r_i].sn+1, table.LexTable.table[pos_function_for_r_i].indexLT);
+					throw error;
+				}
+			}
+
+			else if (table.LexTable.table[pos_function_for_r_i].lexema == 'F') {
+				if (table.idTable.table[table.LexTable.table[pos_function_for_return].idxTI].iddatatype != IT::BOOL) {
+
+					Error::ERROR error = Error::geterrorin(116, table.LexTable.table[pos_function_for_r_i].sn+1, table.LexTable.table[pos_function_for_r_i].indexLT);
+					throw error;
+				
+				}
+			}
+
+			else if (table.idTable.table[table.LexTable.table[pos_function_for_return].idxTI].iddatatype != table.idTable.table[table.LexTable.table[pos_function_for_r_i].idxTI].iddatatype) {
+				
+				Error::ERROR error = Error::geterrorin(116, table.LexTable.table[pos_function_for_r_i].sn+1, table.LexTable.table[pos_function_for_r_i].indexLT);
+				throw error;
+			}
+			
+
+
+		}
+
+
+
+
+	}
+
+
+
+
+
+
+
+
+}
+
 
 Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 	char LibFunc[2][225] = { "stringtoint", "strlen" };
@@ -538,14 +740,16 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 	int i = 0;
 	bool flag_in_word = false;
 	bool flag_error = false;
-
+	int  vs_func = 0;
 	//
+	
 	int index_lit = 0;
-	int indexIT = 0;
+	int indexIT = -1;
 	IT::IDDATATYPE iddatatype = IT::NODEF;
 	IT::IDTYPE idtype = IT::V;
 	bool parflag = 0;
 	bool functionflag = 0;
+	
 	bool flag_main = false;
 	//дл€ выражений
 	bool Pflag = 0;
@@ -597,9 +801,20 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 			sn++;
 		}//
 		else if (in.code[in.text[i]] == in.S) {
-			word[word_it] = in.text[i];
-			i++;
-			word_it++;
+			if (in.text[i] == in.text[i+1]) {
+				word[word_it] = in.text[i];
+				i++;
+				word_it++;
+				word[word_it] = in.text[i];
+				i++;
+				word_it++;
+			}
+			else {
+				word[word_it] = in.text[i];
+				i++;
+				word_it++;
+			}
+
 			word[word_it] = '\0';
 			flag_in_word = true;
 			//sn++;
@@ -621,12 +836,26 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 			//cout << word <<"|";
 		}
 		if (flag_in_word) {
+			LT::Entry lt;
 			flag_error = true;
 			for (m = 0; m < N_GRAPHS; m++) {
 				if (FST::execute(machines[m].machine, word))
 				{
-					LT::Entry lt = { machines[m].lexema ,indexLT,pos_LT };
-					LT::Add(LexTable, lt);
+					if ( strcmp(word, "==") == 0 || strcmp(word, "-") == 0 || strcmp(word, "+") == 0 || strcmp(word, "*") == 0 || strcmp(word, "/") == 0 || strcmp(word, "%") == 0) {
+						if (strcmp(word, "==") == 0) {
+							lt = { 's' ,indexLT,pos_LT ,indexIT,machines[m].lexema };
+						}
+						else {
+
+
+							lt = { 'v' ,indexLT,pos_LT ,indexIT,machines[m].lexema };
+						}
+					}
+					else {
+						 lt = { machines[m].lexema ,indexLT,pos_LT,indexIT };
+						
+					}
+
 					flag_error = true;
 					break;
 				}
@@ -644,15 +873,28 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 				flag_main = true;
 			}
 			else if (idtype == IT::F && machines[m].lexema == 'i') {
-				
-					id = word;
-					if (!IT::IsId(IdTable, id)) {
+
+				id = word;
+				if (IT::IsId(IdTable, id)== TI_NULLIDX) {
+					if (iddatatype != IT::NODEF) {
 						st.push(word);
 						IT::Entry it = { LexTable.size,id , iddatatype, idtype, 0 };
 						IT::Add(IdTable, it);
-
+						indexIT = IdTable.size-1;
+						iddatatype = IT::NODEF;
 					}
-					//доб в табл идентификаторов				
+					else {
+						cout << word << endl;
+						Error::ERROR error = Error::geterrorin(115, indexLT+1, pos_LT);
+						throw error;
+						break;
+					}
+
+				}
+				else {
+					indexIT = IT::IsId(IdTable, id);
+				}
+				//доб в табл идентификаторов				
 			}
 			else if (strcmp(word, "(") == 0 && idtype == IT::F) {
 				idtype = IT::P;
@@ -660,78 +902,140 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 			else if (idtype == IT::P && strcmp(word, ")") == 0) {
 				idtype = IT::V;
 			}
-			else if (machines[m].lexema == 'l' || machines[m].lexema == 'T'|| machines[m].lexema == 'F') {
+			else if (machines[m].lexema == 'l' || machines[m].lexema == 'T' || machines[m].lexema == 'F') {
 				if (!st.empty()) {
 					id = word;
-					
+
 
 					//IT::Entry it;
-					if (m==24) {
-						IT::Entry it = { LexTable.size, id , IT::INT, IT::L, 0};
-						IT::Add(IdTable, it);
-				
-					}
-					else if ( m == 25 ) {
+					if (m == 24) {
+
 						IT::Entry it = { LexTable.size, id , IT::INT, IT::L, 0 };
 						IT::Add(IdTable, it);
-
+						indexIT = IdTable.size - 1;
 					}
-					
-					else if (strcmp(id,"true")==0) {
+					else if (m == 25) {
+						IT::Entry it = { LexTable.size, id , IT::INT, IT::L, 0 };
+						IT::Add(IdTable, it);
+						indexIT = IdTable.size - 1;
+					}
+
+					else if (strcmp(id, "true") == 0) {
+
 						IT::Entry it = { LexTable.size, id , IT::BOOL, IT::L, true };
 						IT::Add(IdTable, it);
-					
-					}
-					else if (strcmp(id, "false") == 0) {
-						IT::Entry it = { LexTable.size, id , IT::BOOL, IT::L, false };
-						IT::Add(IdTable, it);
-					
-					}
-					else if (m==26) {
-						IT::Entry it = { LexTable.size, id , IT::STR, IT::L, 0 };
-						it.value.vstr = { (int)strlen(word) , word };
-						IT::Add(IdTable, it);
+						indexIT = IdTable.size - 1;
 						
 					}
-					//iddatatype = IT::NODEF;
+					else if (strcmp(id, "false") == 0) {
+
+						IT::Entry it = { LexTable.size, id , IT::BOOL, IT::L, false };
+						IT::Add(IdTable, it);
+						indexIT = IdTable.size - 1;
+					}
+					else if (m == 26) {
+						IT::Entry it = { LexTable.size, id , IT::STR,  IT::L, 0 };
+						it.value.vstr = { (int)strlen(word) , word };
+						IT::Add(IdTable, it);
+						indexIT = IdTable.size - 1;
+					//IT::Entry it = { LexTable.size, id , IT::STR, IT::L, 0 };
+						
+						
+
+					}
 				}
 				else {
-					cout << "пошЄл нахуй" << endl;
+					//cout << word << endl;
+					Error::ERROR error = Error::geterrorin(115, indexLT+1, pos_LT);
+					throw error;
+					break;
 				}
-
-				
-			//	IT::Add(IdTable, it);
 			}
 			else if (machines[m].lexema == 'i') {
 				if (!st.empty()) {
-					if (idtype == IT::F || idtype == IT::P) {					
-							id = word;
-							strcat(id, "_");
-							strcat(id, st.top());
-							if (!IT::IsId(IdTable, id)) {
+					if (strcmp(word, LibFunc[0]) == 0 ) {
+						IT::Entry it = { LexTable.size, word , IT::INT, IT::F, 0 };
+						IT::Add(IdTable, it);
+						iddatatype = IT::NODEF;
+					}
+					else if (strcmp(word, LibFunc[1]) == 0) {
+						IT::Entry it = { LexTable.size, word , IT::INT, IT::F, 0 };
+						IT::Add(IdTable, it);
+						iddatatype = IT::NODEF;
+					}
+					else if (idtype == IT::F || idtype == IT::P) {
+						id = word;
+						strcat(id, "_");
+						strcat(id, st.top());
+						if (IT::IsId(IdTable, id) == TI_NULLIDX) {
+							if (iddatatype != IT::NODEF) {
 								IT::Entry it = { LexTable.size, id , iddatatype, idtype, 0 };
 								IT::Add(IdTable, it);
-								//iddatatype = IT::NODEF;
-							}										
+								indexIT = IdTable.size-1;
+								iddatatype = IT::NODEF;
+							}
+							else {
+							//	cout << word << endl;
+								Error::ERROR error = Error::geterrorin(115, indexLT+1, pos_LT);
+								throw error;
+								break;
+							}
+						}
+						else {
+							indexIT = IT::IsId(IdTable, id);
+						}
+						
 					}
 					else if (idtype == IT::V) {
 						id = word;
+						vs_func = IT::IsId(IdTable,word);
+						//cout << vs_func << "   позици€€€€€€€€€€€€     " <<word<< endl;
+						if (IdTable.table[vs_func].idtype != IT::F) {
+							
 
-						strcat(id, "_");
-						strcat(id, st.top());
-						if (!IT::IsId(IdTable, id)) {
 
-							IT::Entry it = { LexTable.size, id , iddatatype, idtype, 0 };
-							IT::Add(IdTable, it);
-							//iddatatype = IT::NODEF;
+							strcat(id, "_");
+							strcat(id, st.top());
+							if (IT::IsId(IdTable, id) == TI_NULLIDX) {
+
+								if (iddatatype != IT::NODEF) {
+									IT::Entry it = { LexTable.size, id , iddatatype, idtype, 0 };
+
+									IT::Add(IdTable, it);
+									indexIT = IdTable.size - 1;
+									iddatatype = IT::NODEF;
+								}
+								else {
+
+							
+							//	cout << word << endl;
+								Error::ERROR error = Error::geterrorin(115, indexLT + 1, pos_LT);
+								throw error;
+								break;
+							
+
+								}
+							}
+							else {
+								indexIT = IT::IsId(IdTable, id);
+							}
+						}
+						else {
+							indexIT = IT::IsId(IdTable, word);
+		//					cout << indexIT << "   позици€€€€€€€€€€€€    сработал else  " << word << endl;
 						}
 					}
 				}
 				else
 				{
-					cout << "пошЄл нахуй" << endl;
+					Error::ERROR error = Error::geterrorin(114, indexLT+1, pos_LT);
+					throw error;
+					break;
 				}
 			}
+			lt.idxTI = indexIT;
+			LT::Add(LexTable, lt);
+			indexIT = -1;
 		}
 
 
