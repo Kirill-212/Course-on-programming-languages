@@ -56,6 +56,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 				Gen_txt.CONST += td.idTable.table[td.LexTable.table[i].idxTI].id;
 				Gen_txt.CONST += "\t sdword  ";
 				Gen_txt.CONST += "\t";
+				//cout << td.idTable.table[td.LexTable.table[i].idxTI].value.vint;
 				Gen_txt.CONST += std::to_string(td.idTable.table[td.LexTable.table[i].idxTI].value.vint);
 				Gen_txt.CONST += "\n";
 			}

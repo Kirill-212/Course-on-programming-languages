@@ -544,7 +544,7 @@ void Lex::Sem_analiz(Lex::Tables table) {
 		else if (flag_expression && table.LexTable.table[i].lexema == 'i' && table.LexTable.table[i + 1].lexema == '(') {
 
 			m = 0;
-			if (strcmp(table.idTable.table[table.LexTable.table[i].idxTI].id , "stringtoint")==0 || strcmp(table.idTable.table[table.LexTable.table[i].idxTI].id, "strlen")==0 ) {
+			if (strcmp(table.idTable.table[table.LexTable.table[i].idxTI].id , "stringtoint")==0 || strcmp(table.idTable.table[table.LexTable.table[i].idxTI].id, "strlen1")==0 ) {
 
 				
 				if (table.idTable.table[table.LexTable.table[pos_expression].idxTI].iddatatype != IT::INT) {
@@ -713,9 +713,19 @@ void Lex::Sem_analiz(Lex::Tables table) {
 
 }
 
+int conv(char* s)
+{
+	int res = 0;
+	for (int i = 0; i < strlen(s); ++i)
+	{
+		res *= 8;
+		res += (s[i] - '0');
+	}
 
+	return res;
+}
 Lex::Tables Lex::Lex_analyz_new(In::IN in) {
-	char LibFunc[2][225] = { "stringtoint", "strlen" };
+	char LibFunc[2][225] = { "stringtoint", "strlen1" };
 	bool libflag = 0;
 	int m = 0;
 	LT::LexTable LexTable = LT::Create();
@@ -967,8 +977,9 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 					//IT::Entry it;
 					if (m == 24) {
 
+						cout << word;
 						IT::Entry it = { LexTable.size, id , IT::INT, IT::L, 0 };
-						it.value.vint = atoi(id);
+						it.value.vint = conv(id) ;
 						IT::Add(IdTable, it);
 						indexIT = IdTable.size - 1;
 					}

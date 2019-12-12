@@ -1,8 +1,11 @@
 
  int function fs(int sqw,int qds){
 	dec int sss;
+sss=0545475;
+	sss=stringtoint('2342o');
+	sss=strlen1('424');
+
 	sss=stringtoint('4');
-	sss=strlen('424');
 dec int ss1s;
 ss1s=(sss)--1;
 sss=-4;
@@ -53,7 +56,7 @@ int function q1s(bool saaq,int qaaqe){
 
 	main{	
 	  dec	int num;
-	num=04646o;
+	num=04646;
 
 	dec int col;
 	col=12345;

@@ -15,6 +15,21 @@
 
 using namespace std;
 
+int stringtoint(char* arr) {
+	int N = std::strlen(arr);
+	int res = 0;
+	int i = 0;
+	int col = 1;
+	for (; i < N; i++) {
+		col = col * 10;
+	}
+	col = col / 10;
+	for (i = 0; i < N; i++) {
+		res += ((int)arr[i] - (int)'0')*col;
+		col = col / 10;
+	}
+	return res;
+}
 
  int wmain(int argc, wchar_t* argv[]) {
 
@@ -22,6 +37,8 @@ using namespace std;
 	Log::LOG log = Log::INTLOG;
 	try
 	{
+
+		int rsw = stringtoint((char*)"4244");
 		int res;
 		res = 13 % 2;
 		cout << res << endl;
@@ -182,6 +199,5 @@ using namespace std;
 	}
 	system("pause");
 }
-
 
 
