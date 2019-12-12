@@ -110,7 +110,7 @@ int PN::getP(LT::Entry table)
 	if (token == 'v') token = table.value;
 
 	if (token == '*' || token == '/') return 3;
-	else if (token == '+' || token == '-') return 2;
+	else if (token == '+' || token == '-'||token=='%') return 2;
 	else if (token == '(') return 1;
 	else if (token == ')') return -1;
 	else if (token == ',') return -2;
@@ -123,12 +123,14 @@ int PN::getP(LT::Entry table)
 bool PN::PolishNotation1(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtable) {
 	stack<LT::Entry> st;
 	int getprior;
+	int in_id=-1;
 	bool flag = false;
 	int cobaka = 0;
 	queue<LT::Entry> myQueue;
 	int end;
 	for (int i = lextable_pos; i < lextable.size; i++) {
 		if (lextable.table[i].lexema == 'i'&&lextable.table[i + 1].lexema == '(') {
+			in_id = lextable.table[i].idxTI;
 			i++;
 			flag = true;
 		}
@@ -168,7 +170,7 @@ bool PN::PolishNotation1(int lextable_pos, LT::LexTable& lextable, IT::IdTable& 
 				st.pop();
 				if (flag) {
 					cout << cobaka + 1 << endl;
-					myQueue.push({ '@',myQueue.front().sn,cobaka + 1 });
+					myQueue.push({ '@',myQueue.front().sn,cobaka + 1,in_id });
 					cobaka = 0;
 
 					flag = false;
@@ -216,7 +218,7 @@ void PN::polish_notation(Lex::Tables td)
 		if (td.LexTable.table[i].lexema == '=') {
 			
 			if (td.LexTable.table[i+1].lexema != 'T') {
-				if ((td.LexTable.table[i + 1].lexema == 'i' &&td.LexTable.table[i + 2].lexema != ';')||td.LexTable.table[i + 1].lexema == 'l' &&td.LexTable.table[i + 2].lexema != ';') {
+				if ( td.LexTable.table[i + 2].lexema != ';') {
 					
 								flag=PN::PolishNotation1(i, td.LexTable, td.idTable);
 								cout << flag << endl;

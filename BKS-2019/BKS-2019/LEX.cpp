@@ -542,20 +542,40 @@ void Lex::Sem_analiz(Lex::Tables table) {
 			
 		}
 		else if (flag_expression && table.LexTable.table[i].lexema == 'i' && table.LexTable.table[i + 1].lexema == '(') {
-			pos_in_vector = ret_index_for_expression(table.LexTable.table[i].idxTI, par_func);
-		//	cout << table.idTable.table[table.LexTable.table[pos_expression].idxTI].id << endl;
-			//cout << table.idTable.table[pos_in_vector].id << endl;
-			if (table.idTable.table[table.LexTable.table[pos_expression].idxTI].iddatatype!= table.idTable.table[pos_in_vector].iddatatype ) {
-				Error::ERROR error = Error::geterrorin(117, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
-				throw error;
-			}
+
+			m = 0;
+			if (strcmp(table.idTable.table[table.LexTable.table[i].idxTI].id , "stringtoint")==0 || strcmp(table.idTable.table[table.LexTable.table[i].idxTI].id, "strlen")==0 ) {
+
 				
-			for (m = 0; m < par_func.size(); m++) {
-				if (pos_in_vector == par_func[m].indxLT) {
-					break;
+				if (table.idTable.table[table.LexTable.table[pos_expression].idxTI].iddatatype != IT::INT) {
+					Error::ERROR error = Error::geterrorin(118, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
+					throw error;
 				}
+				if (table.idTable.table[table.LexTable.table[i + 2].idxTI].iddatatype != IT::STR ) {
+					Error::ERROR error = Error::geterrorin(118, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
+					throw error;
+				}
+				if (table.LexTable.table[i + 3].lexema != ')') {
+					Error::ERROR error = Error::geterrorin(118, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
+					throw error;
+				}
+				i = i + 3;
 			}
-				for (q = i+1; i < table.LexTable.size; q++) {
+			else {
+				pos_in_vector = ret_index_for_expression(table.LexTable.table[i].idxTI, par_func);
+				//	cout << table.idTable.table[table.LexTable.table[pos_expression].idxTI].id << endl;
+					//cout << table.idTable.table[pos_in_vector].id << endl;
+				if (table.idTable.table[table.LexTable.table[pos_expression].idxTI].iddatatype != table.idTable.table[pos_in_vector].iddatatype) {
+					Error::ERROR error = Error::geterrorin(117, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
+					throw error;
+				}
+
+				for (; m < par_func.size(); m++) {
+					if (pos_in_vector == par_func[m].indxLT) {
+						break;
+					}
+				}
+				for (q = i + 1; i < table.LexTable.size; q++) {
 					if (par_func[m].type.size() < par_vs_funcr) {
 
 						Error::ERROR error = Error::geterrorin(118, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
@@ -563,7 +583,7 @@ void Lex::Sem_analiz(Lex::Tables table) {
 					}
 					if (table.LexTable.table[q].lexema == 'i') {
 						if (par_func[m].type.size() == par_vs_funcr) {
-							
+
 							Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
 							throw error;
 						}
@@ -599,7 +619,9 @@ void Lex::Sem_analiz(Lex::Tables table) {
 					}
 					//par_vs_funcr++;
 				}
+
 				i = q;
+			}
 				par_vs_funcr = 0;
 			
 		}
@@ -757,6 +779,14 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 	char * prefix = (char *)"";
 	//char * id;
 	stack <char*> st;
+
+	
+
+
+
+
+
+
 	while (in.text[i] != '\0')
 	{
 		word_it = 0;
@@ -801,7 +831,32 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 			sn++;
 		}//
 		else if (in.code[in.text[i]] == in.S) {
-			if (in.text[i] == in.text[i+1]) {
+
+				if(in.text[i]=='-' && (machines[m].lexema=='='|| machines[m].lexema == '-' || machines[m].lexema == '+' || machines[m].lexema == '*' || machines[m].lexema == '=' || machines[m].lexema == '/' || machines[m].lexema == '%' || machines[m].lexema == '=='
+					|| machines[m].lexema == '=' || machines[m].lexema == ')' || machines[m].lexema == '(' || machines[m].lexema == 'r'  )){
+					word[word_it] = in.text[i];
+					i++;
+					word_it++;
+					while (in.text[i] != '\0' ) {
+					if (in.code[in.text[i]] == in.P || in.code[in.text[i]] == in.S  || in.text[i] == ';') {
+						word[word_it] = '\0';
+						
+						
+						break;
+					}
+						word[word_it] = in.text[i];
+						i++;
+						word_it++;
+
+					
+					}
+				}
+				else if (in.text[i] == '-' &&in.text[i + 1] == '-') {
+					word[word_it] = in.text[i];
+					i++;
+					word_it++;
+				}
+			else if (in.text[i] == in.text[i+1]) {
 				word[word_it] = in.text[i];
 				i++;
 				word_it++;
@@ -838,9 +893,11 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 		if (flag_in_word) {
 			LT::Entry lt;
 			flag_error = true;
+
 			for (m = 0; m < N_GRAPHS; m++) {
+
 				if (FST::execute(machines[m].machine, word))
-				{
+				{					
 					if ( strcmp(word, "==") == 0 || strcmp(word, "-") == 0 || strcmp(word, "+") == 0 || strcmp(word, "*") == 0 || strcmp(word, "/") == 0 || strcmp(word, "%") == 0) {
 						if (strcmp(word, "==") == 0) {
 							lt = { 's' ,indexLT,pos_LT ,indexIT,machines[m].lexema };
@@ -911,25 +968,27 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 					if (m == 24) {
 
 						IT::Entry it = { LexTable.size, id , IT::INT, IT::L, 0 };
+						it.value.vint = atoi(id);
 						IT::Add(IdTable, it);
 						indexIT = IdTable.size - 1;
 					}
 					else if (m == 25) {
 						IT::Entry it = { LexTable.size, id , IT::INT, IT::L, 0 };
+						it.value.vint = atoi(id);
 						IT::Add(IdTable, it);
 						indexIT = IdTable.size - 1;
 					}
 
 					else if (strcmp(id, "true") == 0) {
 
-						IT::Entry it = { LexTable.size, id , IT::BOOL, IT::L, true };
+						IT::Entry it = { LexTable.size, id , IT::BOOL, IT::L, 1 };
 						IT::Add(IdTable, it);
 						indexIT = IdTable.size - 1;
 						
 					}
 					else if (strcmp(id, "false") == 0) {
 
-						IT::Entry it = { LexTable.size, id , IT::BOOL, IT::L, false };
+						IT::Entry it = { LexTable.size, id , IT::BOOL, IT::L, 0 };
 						IT::Add(IdTable, it);
 						indexIT = IdTable.size - 1;
 					}
@@ -956,11 +1015,13 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 					if (strcmp(word, LibFunc[0]) == 0 ) {
 						IT::Entry it = { LexTable.size, word , IT::INT, IT::F, 0 };
 						IT::Add(IdTable, it);
+						indexIT = IdTable.size - 1;
 						iddatatype = IT::NODEF;
 					}
 					else if (strcmp(word, LibFunc[1]) == 0) {
 						IT::Entry it = { LexTable.size, word , IT::INT, IT::F, 0 };
 						IT::Add(IdTable, it);
+						indexIT = IdTable.size - 1;
 						iddatatype = IT::NODEF;
 					}
 					else if (idtype == IT::F || idtype == IT::P) {
@@ -1047,6 +1108,7 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 
 
 		if (!flag_error) {
+			cout << word << endl;
 			Error::ERROR error = Error::geterrorin(113, indexLT, pos_LT);
 			throw error;
 			break;

@@ -11,7 +11,7 @@
 #include"GRB.h"
 #include"MFST.h"
 #include"PN.h"
-
+#include"GEN.h"
 
 using namespace std;
 
@@ -22,7 +22,9 @@ using namespace std;
 	Log::LOG log = Log::INTLOG;
 	try
 	{
-
+		int res;
+		res = 13 % 2;
+		cout << res << endl;
 		//Parm::PARM parm = Parm::getparm(argc, argv);
 		log = Log::getlog((wchar_t *)L"C:\\ycheba\\main_kyrsovoi\\Course-on-programming-languages\\test_project\\log.log");
 		//wcout << "-in:" << parm.in << ", -out" << parm.out << ", -log: " << parm.log << endl;
@@ -72,7 +74,7 @@ using namespace std;
 
 
 	for (int i = 0; i < Tables.idTable.size;i++) {
-		cout << Tables.idTable.table[i].id <<"            "<< Tables.idTable.table[i].iddatatype << "            " << Tables.idTable.table[i].idtype<< endl;
+		cout << Tables.idTable.table[i].id <<"            "<< Tables.idTable.table[i].iddatatype << "            " << Tables.idTable.table[i].idtype<<"        "<<endl;
 	}
 
 	cout << endl;
@@ -103,9 +105,36 @@ using namespace std;
 			b = Tables.LexTable.table[i].sn;
 			std::cout << b << "|";
 		}
-		cout << Tables.LexTable.table[i].lexema ;
+		if (Tables.LexTable.table[i].lexema == 'v') {
+			cout << Tables.LexTable.table[i].value;
+		}
+		else {
+			cout << Tables.LexTable.table[i].lexema ;
+		}
+		
 
 	}
+	b = Tables.LexTable.table[0].sn;
+	cout << std::endl;
+	for (int i = 0; i < Tables.LexTable.size; i++) {
+		if (i == 0) {
+			std::cout << b << "|";
+		}
+		if (b != Tables.LexTable.table[i].sn) {
+			std::cout << std::endl;
+			b = Tables.LexTable.table[i].sn;
+			std::cout << b << "|";
+		}
+		cout << Tables.LexTable.table[i].lexema << "[" << Tables.LexTable.table[i].idxTI << "]";
+
+	}
+	GEN::FixID(Tables);
+	cout << endl;
+	for (int i = 0; i < Tables.idTable.size; i++) {
+		cout << Tables.idTable.table[i].id << "            " << Tables.idTable.table[i].iddatatype << "            " << Tables.idTable.table[i].idtype << "        " << endl;
+	}
+
+	cout << endl;
 	cout << endl;
 
 	//cout << endl;
@@ -135,7 +164,7 @@ using namespace std;
 	//		}
 	//	}
 		
-
+	GEN::GetGeN((wchar_t *)L"C:\\ycheba\\main_kyrsovoi\\Course-on-programming-languages\\test_project\\out.txt", Tables);
 
 		//Log::WriteLine(log, "Тест:", "без ошибок", "");
 		//Log::WriteLog(log);

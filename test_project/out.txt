@@ -1,0 +1,348 @@
+.586P
+
+
+.MODEL FLAT,STDCALL
+
+includelib kernel32.lib
+includelib libucrt.lib
+
+EXTERN strlen :proc
+EXTERN stringtoint :proc
+
+ExitProcess PROTO : DWORD
+MessageBoxA PROTO : DWORD, : DWORD, : DWORD, : DWORD
+
+SetConsoleTitleA PROTO :DWORD
+GetStdHandle     PROTO :DWORD
+WriteConsoleA    PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+
+.STACK 4096
+
+
+.CONST
+
+L1	 DQ  	'4'
+L2	 DQ  	'424'
+L3	 sdword  	-1
+L4	 sdword  	-4
+L5	 sdword  	3
+L6	 sdword  	4
+L7	 sdword  	4
+L8	 sdword  	4
+L9	 sdword  	3
+L10	 sdword  	3
+L11	 sdword  	4
+L12	 sdword  	22
+L13	 sdword  	4
+L14	 sdword  	3
+L15	 sdword  	4
+L16	 dword  	0
+L17	 dword  	1
+L18	 sdword  	1
+L19	 sdword  	10
+L20	 sdword  	4646
+L21	 sdword  	12345
+L22	 dword  	1
+L23	 DQ  	'214224521'
+L24	 DQ  	'control example'
+L25	 sdword  	1
+L26	 DQ  	'12345'
+L27	 sdword  	3
+L28	 sdword  	10
+L29	 sdword  	1
+L30	 dword  	1
+consoletitle db 'console title', 0
+.DATA
+
+sss_fs	 sdword  	?
+ss1s_fs	 sdword  	?
+s2trr_fs	 sdword  	?
+z_fs	 sdword  	?
+z_fs21	 sdword  	?
+sms1_fs21	 sdword  	?
+sms5_fs21	 DQ  	?
+sms4_fs21	 DQ  	?
+qw_sb	 sdword  	?
+fst1_sb	 dword  	?
+swe_sb	 sdword  	?
+rc_qs	 dword  	?
+rc_q1s	 dword  	?
+m_q1s	 sdword  	?
+num_main	 sdword  	?
+col_main	 sdword  	?
+fswr_main	 dword  	?
+lit_main	 DQ  	?
+lit1_main	 DQ  	?
+lent_main	 sdword  	?
+sa_main	 sdword  	?
+str4_main	 DQ  	?
+res_main	 sdword  	?
+fst3_main	 dword  	?
+years_main	 sdword  	?
+
+.CODE
+
+fs PROC sqw_fs: sdword , qds_fs: sdword
+
+MOV EBX , 0 
+MOV EAX , 0 
+PUSH L1
+call stringtoint
+ push EAX
+MOV EAX , 0
+POP EAX
+MOV sss_fs , EAX
+
+MOV EBX , 0 
+MOV EAX , 0 
+PUSH L2
+call strlen
+ push EAX
+MOV EAX , 0
+POP EAX
+MOV sss_fs , EAX
+
+MOV EBX , 0 
+MOV EAX , 0 
+PUSH sss_fs
+PUSH L3
+POP EBX
+POP EAX
+SUB EAX , EBX 
+PUSH EAX 
+MOV EAX , 0
+POP EAX
+MOV ss1s_fs , EAX
+
+MOV EBX , 0 
+MOV EAX , 0 
+PUSH L4
+MOV EAX , 0
+POP EAX
+MOV sss_fs , EAX
+
+MOV EBX , L6
+MOV EAX , L5
+cmp EAX , EBX
+jz f47
+jnz f047
+f47:
+f047:
+fin:
+MOV EBX , 0 
+MOV EAX , 0 
+PUSH sqw_fs
+PUSH qds_fs
+PUSH L7
+POP EBX
+POP EAX
+ADD EAX , EBX 
+PUSH EAX 
+POP EBX
+POP EAX
+MUL EBX 
+PUSH EAX 
+MOV EAX , 0
+POP EAX
+MOV z_fs , EAX
+
+;-
+MOV EAX , L8
+ret
+;-
+fs ENDP
+
+fs21 PROC sfff_fs21: sdword , qsssq_fs21: sdword
+
+MOV EBX , 0 
+MOV EAX , 0 
+PUSH L9
+MOV EAX , 0
+POP EAX
+MOV z_fs21 , EAX
+
+MOV EBX , 0 
+MOV EAX , 0 
+PUSH L10
+PUSH L11
+call fs
+ push EAX
+PUSH L12
+POP EBX
+POP EAX
+ADD EAX , EBX 
+PUSH EAX 
+MOV EAX , 0
+POP EAX
+MOV sms1_fs21 , EAX
+
+MOV EBX , 0 
+MOV EAX , 0 
+PUSH sfff_fs21
+PUSH qsssq_fs21
+PUSH sfff_fs21
+POP EBX
+POP EAX
+ADD EAX , EBX 
+PUSH EAX 
+POP EBX
+POP EAX
+MUL EBX 
+PUSH EAX 
+MOV EAX , 0
+POP EAX
+MOV z_fs21 , EAX
+
+;-
+MOV EAX , L13
+ret
+;-
+fs21 ENDP
+
+sb PROC svvv_sb: DQ , str2_sb: DQ
+
+MOV EBX , 0 
+MOV EAX , 0 
+PUSH L14
+PUSH L15
+call fs21
+ push EAX
+MOV EAX , 0
+POP EAX
+MOV qw_sb , EAX
+
+MOV EBX , 1
+MOV EAX , fst1_sb
+cmp EAX , EBX
+jz f164
+jnz f0164
+f0164:
+fin:
+;-
+MOV EAX , L16
+ret
+;-
+sb ENDP
+
+qs PROC s_qs: sdword , q_qs: sdword
+
+mov rc_qs , L17
+;-
+MOV EAX , L18
+ret
+;-
+qs ENDP
+
+q1s PROC saaq_q1s: dword , qaaqe_q1s: sdword
+
+MOV EBX , 0 
+MOV EAX , 0 
+PUSH L19
+MOV EAX , 0
+POP EAX
+MOV m_q1s , EAX
+
+;-
+MOV EAX , m_q1sret
+;-
+q1s ENDP
+
+main PROC
+
+START:
+
+MOV EBX , 0 
+MOV EAX , 0 
+PUSH L20
+MOV EAX , 0
+POP EAX
+MOV num_main , EAX
+
+MOV EBX , 0 
+MOV EAX , 0 
+PUSH L21
+MOV EAX , 0
+POP EAX
+MOV col_main , EAX
+
+mov fswr_main , L22
+mov lit_main , L23
+mov lit1_main , L24
+MOV EBX , 0 
+MOV EAX , 0 
+PUSH L25
+MOV EAX , 0
+POP EAX
+MOV lent_main , EAX
+
+mov str4_main , L26
+MOV EBX , 0 
+MOV EAX , 0 
+PUSH L27
+PUSH L28
+PUSH L29
+POP EBX
+POP EAX
+CDQ 
+IDIV EBX 
+PUSH EAX 
+POP EBX
+POP EAX
+ADD EAX , EBX 
+PUSH EAX 
+MOV EAX , 0
+POP EAX
+MOV sa_main , EAX
+
+MOV EBX , 0 
+MOV EAX , 0 
+PUSH sa_main
+PUSH col_main
+POP EBX
+POP EAX
+SUB EAX , EBX 
+PUSH EAX 
+MOV EAX , 0
+POP EAX
+MOV res_main , EAX
+
+
+;printpush 0
+push 0
+ push sizeof res_main
+push sizeof res_main
+push consolehandle
+call WriteConsoleA
+push -11
+call GetStdHandle
+mov consolehandle,eax
+
+;printpush 0
+push 0
+ push sizeof str4_main
+push sizeof str4_main
+push consolehandle
+call WriteConsoleA
+push -11
+call GetStdHandle
+mov consolehandle,eax
+mov fst3_main , L30
+MOV EBX , col_main
+MOV EAX , res_main
+cmp EAX , EBX
+jz f330/njnz f0330
+
+;printpush 0
+push 0
+ push sizeof col_main
+push sizeof col_main
+push consolehandle
+call WriteConsoleA
+push -11
+call GetStdHandle
+mov consolehandle,eax
+
+push 0
+call ExitProcess
+main ENDP
+end main

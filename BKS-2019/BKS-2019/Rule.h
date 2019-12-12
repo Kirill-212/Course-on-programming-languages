@@ -6,7 +6,7 @@ namespace GRB
 #define NS(n)	GRB::Rule::Chain::N(n)
 #define TS(n)	GRB::Rule::Chain::T(n)
 	Greibach greibach(NS('S'), TS('$'),
-		8,
+		9,
 
 		Rule(NS('S'), GRB_ERROR_SERIES + 0,						// Неверная структура программы	
 			3,	//S->m{NrE;}; | tfi(F){N};S | tfi(F){NrE;}		
@@ -23,8 +23,8 @@ namespace GRB
 			Rule::Chain(5, TS('i'), TS('='), NS('E'), TS(';'), NS('N')),
 			Rule::Chain(5, TS('d'), TS('t'), TS('i'), TS(';'), NS('N')),
 			Rule::Chain(9, TS('d'), TS('t'), TS('f'), TS('i'), TS('('), NS('F'), TS(')'), TS(';'), NS('N')),
-			Rule::Chain(3, TS('p'), NS('E'), TS(';')),
-			Rule::Chain(4, TS('p'), NS('E'), TS(';'), NS('N')),
+			Rule::Chain(5, TS('p'),TS('('), NS('P'), TS(')'), TS(';')),
+			Rule::Chain(6, TS('p'), TS('('), NS('P'), TS(')'), TS(';'), NS('N')),
 			Rule::Chain(9, TS('?'), TS('('), NS('Q'), TS(')'), TS('{'), NS('N'), TS('}'), TS(';'), NS('N')),
 			Rule::Chain(8, TS('?'), TS('('), NS('Q'), TS(')'), TS('{'), NS('N'), TS('}'), TS(';'))
 		),
@@ -75,6 +75,14 @@ namespace GRB
 			Rule::Chain(3, TS('i'),TS('s'),TS('i')),
 			Rule::Chain(3, TS('l'), TS('s'), TS('l')),
 			Rule::Chain(1, TS('i')),
+			Rule::Chain(1, TS('T')),
+			Rule::Chain(1, TS('F'))
+
+		),
+		Rule(NS('P'), GRB_ERROR_SERIES + 8,
+			4,
+			Rule::Chain(1, TS('i')),
+			Rule::Chain(1, TS('l')),
 			Rule::Chain(1, TS('T')),
 			Rule::Chain(1, TS('F'))
 
