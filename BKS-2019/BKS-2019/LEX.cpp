@@ -715,13 +715,43 @@ void Lex::Sem_analiz(Lex::Tables table) {
 
 int conv(char* s)
 {
+	int q = 1;
 	int res = 0;
-	for (int i = 0; i < strlen(s); ++i)
+	if (s[0] == '-')q = -1;
+	for (int i = 2; i < strlen(s); ++i)
 	{
 		res *= 8;
 		res += (s[i] - '0');
 	}
+	res = res * q;
+	return res;
+}
+int conv1(char* arr) {
+	int N = strlen(arr);
+	int res = 0;
+	int i = 0;
+	int col = 1;
+	int f = 1;
+	if (arr[0] == '-') {
+		f = -1; 
+		i = 1;
+	}
 
+	for (; i < N; i++) {
+		col = col * 10;
+	}
+	col = col / 10;
+	if (f == -1) {
+		i = 1;
+	}
+	else {
+		i = 0;
+	}
+	for (; i < N; i++) {
+		res += ((int)arr[i] - (int)'0')*col;
+		col = col / 10;
+	}
+	res = res * f;
 	return res;
 }
 Lex::Tables Lex::Lex_analyz_new(In::IN in) {
@@ -756,9 +786,9 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 		{LEX_STAR           , FST::FST GRAPH_START						 },//25
 		{LEX_DIRSLASH           , FST::FST GRAPH_DIRSLASH			     },//26
 		{LEX_EQUAL         , FST::FST GRAPH_EQUAL					     },//27
-		{LEX_PERSENT           , FST::FST GRAPH_PERSENT				     },//28		
-		{LEX_LITERAL            , FST::FST GRAPH_integer_literal10       },//13
-		{LEX_LITERAL         , FST::FST GRAPH_integer_literal8           },//14
+		{LEX_PERSENT           , FST::FST GRAPH_PERSENT				     },//28
+		{LEX_LITERAL         , FST::FST GRAPH_integer_literal8           },//14		
+		{LEX_LITERAL            , FST::FST GRAPH_integer_literal10       },//13		
 		{LEX_LITERAL        , FST::FST GRAPH_string_literal				 },//16
 		{LEX_ID           , FST::FST GRAPH_id							 },//15	
 
@@ -979,13 +1009,15 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 
 						cout << word;
 						IT::Entry it = { LexTable.size, id , IT::INT, IT::L, 0 };
-						it.value.vint = conv(id) ;
+						it.value.vint = conv(id);
+					//	it.value.vint = atoi(id);
 						IT::Add(IdTable, it);
 						indexIT = IdTable.size - 1;
 					}
 					else if (m == 25) {
 						IT::Entry it = { LexTable.size, id , IT::INT, IT::L, 0 };
-						it.value.vint = atoi(id);
+						it.value.vint = conv1(id);
+						//it.value.vint = conv(id);
 						IT::Add(IdTable, it);
 						indexIT = IdTable.size - 1;
 					}

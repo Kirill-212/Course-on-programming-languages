@@ -181,7 +181,7 @@ int stringtoint(char* arr) {
 	//		}
 	//	}
 		
-	GEN::GetGeN((wchar_t *)L"C:\\ycheba\\main_kyrsovoi\\Course-on-programming-languages\\test_project\\out.txt", Tables);
+	GEN::GetGeN((wchar_t *)L"C:\\ycheba\\main_kyrsovoi\\Course-on-programming-languages\\BKS-2019\\main_asm\\asm\\asm\\Project.asm", Tables);
 
 		//Log::WriteLine(log, "Тест:", "без ошибок", "");
 		//Log::WriteLog(log);

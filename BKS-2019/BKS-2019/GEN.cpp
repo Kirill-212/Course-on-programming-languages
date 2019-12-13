@@ -63,7 +63,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 			else if (td.idTable.table[td.LexTable.table[i].idxTI].iddatatype == IT::STR) {
 				
 				Gen_txt.CONST += td.idTable.table[td.LexTable.table[i].idxTI].id;
-				Gen_txt.CONST += "\t DQ  ";
+				Gen_txt.CONST += "\t DB  ";
 				Gen_txt.CONST += "\t";
 				Gen_txt.CONST += td.idTable.table[td.LexTable.table[i].idxTI].value.vstr.str;
 				Gen_txt.CONST += "\n";
@@ -111,13 +111,14 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 						Gen_txt.MAIN += "cmp EAX , EBX\n";
 						Gen_txt.MAIN += "jz f";
 						Gen_txt.MAIN += std::to_string(i+1);
-						//Gen_txt.MAIN += "\n";
-						Gen_txt.MAIN += "\njnz f0";
+						Gen_txt.MAIN += "\n";
+						Gen_txt.MAIN += " jnz f0";
 						Gen_txt.MAIN += std::to_string(i + 1);
-						//Gen_txt.MAIN += "\n";
-						Gen_txt.MAIN += "\nf";
+						Gen_txt.MAIN += "\n";
+						Gen_txt.MAIN += " f";
 						Gen_txt.MAIN += std::to_string(i + 1);
-						Gen_txt.MAIN += ":\n";
+						Gen_txt.MAIN += ":";
+						Gen_txt.MAIN += "\n";
 
 						i = i + 4;
 					}
@@ -129,11 +130,14 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 						Gen_txt.MAIN += "\ncmp EAX , EBX\n";
 						Gen_txt.MAIN += "jz f";
 						Gen_txt.MAIN += std::to_string(i + 1);
-						Gen_txt.MAIN += "\njnz f0";
+						Gen_txt.MAIN += "\n";
+						Gen_txt.MAIN += " jnz f0";
 						Gen_txt.MAIN += std::to_string(i + 1);
-						Gen_txt.MAIN += "\nf";
+						Gen_txt.MAIN += "\n";
+						Gen_txt.MAIN += " f";
 						Gen_txt.MAIN += std::to_string(i + 1);
-						Gen_txt.MAIN += ":\n";
+						Gen_txt.MAIN += ":";
+						Gen_txt.MAIN += "\n";
 						i = i + 2;
 					}
 				}
@@ -148,13 +152,14 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 						Gen_txt.CODE += "cmp EAX , EBX\n";
 						Gen_txt.CODE += "jz f";
 						Gen_txt.CODE += std::to_string(i + 1);
-						//Gen_txt.CODE += "\n";
-						Gen_txt.CODE += "\njnz f0";
+						Gen_txt.CODE += "\n";
+						Gen_txt.CODE += "jnz f0";
 						Gen_txt.CODE += std::to_string(i + 1);
-						//Gen_txt.CODE += "\n";
-						Gen_txt.CODE += "\nf";
+						Gen_txt.CODE += "\n";
+						Gen_txt.CODE += " f";
 						Gen_txt.CODE += std::to_string(i + 1);
-						Gen_txt.CODE += ":\n";
+						Gen_txt.CODE += ":";
+						Gen_txt.CODE += "\n";
 						i = i + 4;
 					}
 					else if (td.LexTable.table[i + 2].lexema == ')') {
@@ -165,13 +170,14 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 						Gen_txt.CODE += "cmp EAX , EBX\n";
 						Gen_txt.CODE += "jz f";
 						Gen_txt.CODE += std::to_string(i + 1);
-						//Gen_txt.CODE += "\n";
-						Gen_txt.CODE += "\njnz f0";
+						Gen_txt.CODE += "\n";
+						Gen_txt.CODE += "jnz f0";
 						Gen_txt.CODE += std::to_string(i + 1);
-						//Gen_txt.CODE += "\n";
-						Gen_txt.CODE += "\nf";
+						Gen_txt.CODE += "\n";
+						Gen_txt.CODE += " f";
 						Gen_txt.CODE += std::to_string(i + 1);
-						Gen_txt.CODE += ":\n";
+						Gen_txt.CODE += ":";
+						Gen_txt.CODE += "\n";
 						i = i + 2;
 
 					}
@@ -186,9 +192,13 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 							Gen_txt.MAIN += "cmp EAX , EBX\n";
 							Gen_txt.MAIN += "jz f";
 							Gen_txt.MAIN += std::to_string(i + 1);
-							//.MAIN += "\n";
-							Gen_txt.MAIN += "\njnz f0";
+							Gen_txt.MAIN += "\n";
+							Gen_txt.MAIN += "jnz f0";
 							Gen_txt.MAIN += std::to_string(i + 1);
+							Gen_txt.MAIN += "\n";
+							Gen_txt.MAIN += " f";
+							Gen_txt.MAIN += std::to_string(i + 1);
+							Gen_txt.MAIN += ":";
 							Gen_txt.MAIN += "\n";
 							i = i + 2;
 						}
@@ -202,9 +212,13 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 							Gen_txt.MAIN += "cmp EAX , EBX\n";
 							Gen_txt.MAIN += "jz f";
 							Gen_txt.MAIN += std::to_string(i + 1);
-							//Gen_txt.MAIN += "\n";
-							Gen_txt.MAIN += "/njnz f0";
+							Gen_txt.MAIN += "\n";
+							Gen_txt.MAIN += "jnz f0";
 							Gen_txt.MAIN += std::to_string(i + 1);
+							Gen_txt.MAIN += "\n";
+							Gen_txt.MAIN += " f";
+							Gen_txt.MAIN += std::to_string(i + 1);
+							Gen_txt.MAIN += ":";
 							Gen_txt.MAIN += "\n";
 							i = i + 4;
 						}
@@ -218,9 +232,13 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 							Gen_txt.CODE += "cmp EAX , EBX\n";
 							Gen_txt.CODE += "jz f";
 							Gen_txt.CODE += std::to_string(i + 1);
-							//Gen_txt.CODE += "\n";
-							Gen_txt.CODE += "\njnz f0";
+							Gen_txt.CODE += "\n";
+							Gen_txt.CODE += "jnz f0";
 							Gen_txt.CODE += std::to_string(i + 1);
+							Gen_txt.CODE += "\n";
+							Gen_txt.CODE += " f";
+							Gen_txt.CODE += std::to_string(i + 1);
+							Gen_txt.CODE += ":";
 							Gen_txt.CODE += "\n";
 							i = i + 2;
 						}
@@ -234,9 +252,13 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 							Gen_txt.CODE += "cmp EAX , EBX\n";
 							Gen_txt.CODE += "jz f";
 							Gen_txt.CODE += std::to_string(i + 1);
-							//Gen_txt.CODE += "\n";
-							Gen_txt.CODE += "\njnz f0";
+							Gen_txt.CODE += "\n";
+							Gen_txt.CODE += "jnz f0";
 							Gen_txt.CODE += std::to_string(i + 1);
+							Gen_txt.CODE += "\n";
+							Gen_txt.CODE += " f";
+							Gen_txt.CODE += std::to_string(i + 1);
+							Gen_txt.CODE += ":";
 							Gen_txt.CODE += "\n";
 							i = i + 4;
 						}
@@ -252,7 +274,9 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 					Gen_txt.CODE += ";-\n";
 					Gen_txt.CODE += "MOV EAX , ";
 					Gen_txt.CODE += td.idTable.table[td.LexTable.table[i + 1].idxTI].id;
-					Gen_txt.CODE += "\nret";
+					Gen_txt.CODE += "\n";
+					Gen_txt.CODE += "ret";
+					Gen_txt.CODE += "\n";
 					Gen_txt.CODE += "\n;-\n";
 					i = i + 2;
 				}
@@ -261,6 +285,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 					Gen_txt.CODE += ";-\n";
 					Gen_txt.CODE += "MOV EAX , ";
 					Gen_txt.CODE += td.idTable.table[td.LexTable.table[i + 1].idxTI].id;
+					Gen_txt.CODE += "\n";
 					Gen_txt.CODE += "ret";
 					Gen_txt.CODE += "\n;-\n";
 					i = i + 2;
@@ -275,7 +300,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 				}
 				else if (td.idTable.table[td.LexTable.table[i + 2].idxTI].iddatatype == IT::STR) {
 					Gen_txt.DATA += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-					Gen_txt.DATA += "\t DQ  \t?\n";
+					Gen_txt.DATA += "\t DD  \t?\n";
 					i = i + 3;
 				}
 				else if (td.idTable.table[td.LexTable.table[i + 2].idxTI].iddatatype == IT::BOOL) {
@@ -287,9 +312,11 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 			 
 
 
-			else if (flag_if &&function_flag && td.LexTable.table[i].lexema == '}') {
+			else if (flag_if  && td.LexTable.table[i].lexema == '}') {
+
 				flag_if = false;
 				if (flag_main) {
+
 					Gen_txt.MAIN += "f0";
 					Gen_txt.MAIN += std::to_string(pos_if);
 					Gen_txt.MAIN += ':';
@@ -317,10 +344,11 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 				pos_expression = i;
 				if (function_flag && !flag_main) {//выражения в функции
 					if (td.idTable.table[td.LexTable.table[i].idxTI].iddatatype == IT::BOOL) {//i=l;
-						Gen_txt.CODE += "mov ";
+						Gen_txt.CODE += "mov EAX , ";
+						Gen_txt.CODE += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
+						Gen_txt.CODE += " \n mov ";
 						Gen_txt.CODE += td.idTable.table[td.LexTable.table[i].idxTI].id;
-						Gen_txt.CODE += " , ";
-						Gen_txt.CODE += td.idTable.table[td.LexTable.table[i+2].idxTI].id;
+						Gen_txt.CODE += " , EAX ";
 						Gen_txt.CODE += "\n";
 						i = i + 3;
 
@@ -328,7 +356,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 					else if (td.idTable.table[td.LexTable.table[i].idxTI].iddatatype == IT::STR) {//i=l;
 						Gen_txt.CODE += "mov ";
 						Gen_txt.CODE += td.idTable.table[td.LexTable.table[i].idxTI].id;
-						Gen_txt.CODE += " , ";
+						Gen_txt.CODE += " , offset ";
 						Gen_txt.CODE += td.idTable.table[td.LexTable.table[i+2].idxTI].id;
 						Gen_txt.CODE += "\n";
 						i = i + 3;
@@ -345,11 +373,19 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 								Gen_txt.CODE += "MOV EAX , 0\nPOP EAX\n";
 								Gen_txt.CODE += "MOV ";
 								Gen_txt.CODE += td.idTable.table[td.LexTable.table[pos_expression].idxTI].id;
-								Gen_txt.CODE += " , EAX\n";
+								Gen_txt.CODE += " ,  EAX\n";
 								Gen_txt.CODE += "\n";
 								break;
 							}
-							else if (td.LexTable.table[i].lexema == 'l' || td.LexTable.table[i].lexema == 'i') {//i=l+...;							
+							else if (td.LexTable.table[i].lexema == 'l' || td.LexTable.table[i].lexema == 'i') {//i=l+...;	
+								if (td.idTable.table[td.LexTable.table[i].idxTI].iddatatype == IT::STR) {
+									Gen_txt.CODE += "PUSH offset ";
+								Gen_txt.CODE += td.idTable.table[td.LexTable.table[i].idxTI].id;
+								Gen_txt.CODE += "\n";
+								}
+								else {
+
+								}
 								Gen_txt.CODE += "PUSH ";
 								Gen_txt.CODE += td.idTable.table[td.LexTable.table[i].idxTI].id;
 								Gen_txt.CODE += "\n";
@@ -403,10 +439,11 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 				}
 				else if (flag_main) {
 					if (td.idTable.table[td.LexTable.table[i].idxTI].iddatatype == IT::BOOL) {//i=l;
-						Gen_txt.MAIN += "mov ";
-						Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i].idxTI].id;
-						Gen_txt.MAIN += " , ";
+						Gen_txt.MAIN += "mov EAX , ";
 						Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
+						Gen_txt.MAIN += " \n mov ";
+						Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i].idxTI].id;
+						Gen_txt.MAIN += " , EAX ";
 						Gen_txt.MAIN += "\n";
 						i = i + 3;
 
@@ -414,7 +451,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 					else if (td.idTable.table[td.LexTable.table[i].idxTI].iddatatype == IT::STR) {//i=l;
 						Gen_txt.MAIN += "mov ";
 						Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i].idxTI].id;
-						Gen_txt.MAIN += " , ";
+						Gen_txt.MAIN += " , offset ";
 						Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
 						Gen_txt.MAIN += "\n";
 						i = i + 3;
@@ -443,6 +480,14 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 								break;
 							}
 							else if (td.LexTable.table[i].lexema == 'l' || td.LexTable.table[i].lexema == 'i') {//i=l+...;							
+								if (td.idTable.table[td.LexTable.table[i].idxTI].iddatatype == IT::STR) {
+									Gen_txt.MAIN += "PUSH offset ";
+									Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i].idxTI].id;
+									Gen_txt.MAIN += "\n";
+								}
+								else {
+
+								}
 								Gen_txt.MAIN += "PUSH ";
 								Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i].idxTI].id;
 								Gen_txt.MAIN += "\n";
@@ -497,43 +542,68 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 			}
 			else if (td.LexTable.table[i].lexema == 'p') {//++
 				if (!flag_main) {
-					if (td.LexTable.table[i + 2].lexema == 'l' || td.LexTable.table[i + 2].lexema == 'T' || td.LexTable.table[i + 2].lexema == 'F') {
-						Gen_txt.CODE += "\n;print";
-						Gen_txt.CODE += "push 0\npush 0\n push sizeof ";
+					if (td.idTable.table[td.LexTable.table[i + 2].idxTI].iddatatype == IT::BOOL) {
+						Gen_txt.CODE += "\n;print \n";
+						Gen_txt.CODE += "push ";
 						Gen_txt.CODE += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-						Gen_txt.CODE += "\npush sizeof ";
-						Gen_txt.CODE += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-						Gen_txt.CODE += "\npush consolehandle\ncall WriteConsoleA\npush -11\ncall GetStdHandle\nmov consolehandle,eax\n";
+						Gen_txt.CODE += "\n call ConsoleBool \n";
 						i = i + 3;
 					}
-					else if (td.LexTable.table[i + 2].lexema == 'i') {
-						Gen_txt.CODE += "\n;print";
-						Gen_txt.CODE += "push 0\npush 0\n push sizeof ";
+					else if (td.idTable.table[td.LexTable.table[i + 2].idxTI].iddatatype == IT::INT) {
+						Gen_txt.CODE += "\n;print \n";
+						Gen_txt.CODE += "push ";
 						Gen_txt.CODE += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-						Gen_txt.CODE += "\npush sizeof ";
-						Gen_txt.CODE += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-						Gen_txt.CODE += "\npush consolehandle\ncall WriteConsoleA\npush -11\ncall GetStdHandle\nmov consolehandle,eax\n";
+						Gen_txt.CODE += "\n ConsoleInt \n";
 						i = i + 3;
 					}
+					else if (td.idTable.table[td.LexTable.table[i + 2].idxTI].iddatatype == IT::STR) {
+						if (td.LexTable.table[i + 2].lexema == 'l') {
+							Gen_txt.CODE += "\n;print \n";
+							Gen_txt.CODE += "push offset ";
+							Gen_txt.CODE += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
+							Gen_txt.CODE += "\n ConsoleStr \n";
+							i = i + 3;
+						}
+						else if ( td.LexTable.table[i + 2].lexema == 'i') {
+							Gen_txt.CODE += "\n;print \n";
+							Gen_txt.CODE += "push  ";
+							Gen_txt.CODE += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
+							Gen_txt.CODE += "\n ConsoleStr \n";
+							i = i + 3;
+						}
+					}
+					
 				}
 				else {
-					if (td.LexTable.table[i + 2].lexema == 'l' || td.LexTable.table[i + 2].lexema == 'T' || td.LexTable.table[i + 2].lexema == 'F') {
-						Gen_txt.MAIN += "\n;print";
-						Gen_txt.MAIN += "push 0\npush 0\n push sizeof ";
+					if (td.idTable.table[td.LexTable.table[i + 2].idxTI].iddatatype == IT::BOOL) {
+						Gen_txt.MAIN += "\n;print \n";
+						Gen_txt.MAIN += "push ";
 						Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-						Gen_txt.MAIN += "\npush sizeof ";
-						Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-						Gen_txt.MAIN += "\npush consolehandle\ncall WriteConsoleA\npush -11\ncall GetStdHandle\nmov consolehandle,eax\n";
+						Gen_txt.MAIN += "\n call ConsoleBool \n";
 						i = i + 3;
 					}
-					else if (td.LexTable.table[i + 2].lexema == 'i') {
-						Gen_txt.MAIN += "\n;print";
-						Gen_txt.MAIN += "push 0\npush 0\n push sizeof ";
+					else if (td.idTable.table[td.LexTable.table[i + 2].idxTI].iddatatype == IT::INT) {
+						Gen_txt.MAIN += "\n;print \n";
+						Gen_txt.MAIN += "push ";
 						Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-						Gen_txt.MAIN += "\npush sizeof ";
-						Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-						Gen_txt.MAIN += "\npush consolehandle\ncall WriteConsoleA\npush -11\ncall GetStdHandle\nmov consolehandle,eax\n";
+						Gen_txt.MAIN += "\n call ConsoleInt \n";
 						i = i + 3;
+					}
+					else if (td.idTable.table[td.LexTable.table[i + 2].idxTI].iddatatype == IT::STR) {
+						if (td.LexTable.table[i + 2].lexema == 'l') {
+							Gen_txt.MAIN += "\n;print \n";
+							Gen_txt.MAIN += "push offset ";
+							Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
+							Gen_txt.MAIN += "\n call ConsoleStr \n";
+							i = i + 3;
+						}
+						else if (td.LexTable.table[i + 2].lexema == 'i') {
+							Gen_txt.MAIN += "\n;print \n";
+							Gen_txt.MAIN += "push  ";
+							Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
+							Gen_txt.MAIN += "\n  call ConsoleStr \n";
+							i = i + 3;
+						}
 					}
 				}
 
@@ -555,7 +625,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 						Gen_txt.CODE += td.idTable.table[td.LexTable.table[i].idxTI].id;
 						if (td.idTable.table[td.LexTable.table[i].idxTI].iddatatype == IT::INT) {
 
-							Gen_txt.CODE += ": sdword";
+							Gen_txt.CODE += ": dword";
 							if (td.LexTable.table[i + 1].lexema == ')') {
 								par_flag = false;
 								break;
@@ -566,7 +636,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 						}
 						else if (td.idTable.table[td.LexTable.table[i].idxTI].iddatatype == IT::STR) {
 							//Gen_txt.CODE += td.idTable.table[td.LexTable.table[i ].idxTI].id;
-							Gen_txt.CODE += ": DQ";
+							Gen_txt.CODE += ": dword";
 							if (td.LexTable.table[i + 1].lexema == ')') {
 								par_flag = false;
 								break;
@@ -601,18 +671,18 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 	out << ".MODEL FLAT,STDCALL\n\n";
 	out << "includelib kernel32.lib\n";
 	out << "includelib libucrt.lib\n\n";
-	out << "EXTERN strlen :proc\n";
+	out << "EXTERN strlen1 :proc\n";
+	out << "EXTERN ConsoleInt :proc\n";
+	out << "EXTERN ConsoleStr :proc\n";
+	out << "EXTERN ConsoleBool :proc\n";
 	out << "EXTERN stringtoint :proc\n\n";
 	out << "ExitProcess PROTO : DWORD\n";
 	out << "MessageBoxA PROTO : DWORD, : DWORD, : DWORD, : DWORD\n\n";
-	out << "SetConsoleTitleA PROTO :DWORD\n";
-	out << "GetStdHandle     PROTO :DWORD\n";
-	out << "WriteConsoleA    PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD\n\n";
 	out << ".STACK 4096\n\n";	
-	out << Gen_txt.CONST;
-	out << "consoletitle db 'console title', 0";	
+	out << Gen_txt.CONST;	
 	out << "\n";
 	out << Gen_txt.DATA;
+	out << "\n consolehandle dd 0h \n";
 	out << "\n";
 	out << Gen_txt.CODE;
 	out << Gen_txt.MAIN;

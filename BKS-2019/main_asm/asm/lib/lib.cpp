@@ -2,25 +2,23 @@
 #include <cstdlib>
 #include<string>
 extern "C" {
+	void ConsoleInt(int value)
+	{
+		std::cout << value << std::endl;
+	}
 
-	int getmin(int* f, int col) {
-		int s = f[0];
-		for (int i = 0; i < col; i++) {
-			if (s > f[i]) {
-				s = f[i];
-			}
-		}
-		return s;
+	void ConsoleStr(char* value)
+	{
+		std::cout << value << std::endl;
 	}
-	int getmax(int* f, int col) {
-		int s = f[0];
-		for (int i = 0; i < col; i++) {
-			if (s < f[i]) {
-				s = f[i];
-			}
-		}
-		return s;
+
+	void ConsoleBool(int value)
+	{
+		if (value) std::cout << "true" << std::endl;
+		else std::cout << "false" << std::endl;
 	}
+
+
 	int stringtoint(char* arr) {
 		int N = std::strlen(arr);
 		int res = 0;
@@ -36,6 +34,7 @@ extern "C" {
 		}
 		return res;
 	}
+
 
 	
 	int strlen1(char* arr) {
