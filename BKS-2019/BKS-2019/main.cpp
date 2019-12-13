@@ -38,7 +38,7 @@ int stringtoint(char* arr) {
 	try
 	{
 
-		int rsw = stringtoint((char*)"4244");
+		int rsw = stringtoint((char*)"1");
 		int res;
 		res = 13 % 2;
 		cout << res << endl;
