@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include<string>
 extern "C" {
-	void ConsoleInt(int value)
+	void ConsoleInt(short value)
 	{
 		std::cout << value << std::endl;
 	}

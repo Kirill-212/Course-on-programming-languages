@@ -281,7 +281,7 @@ namespace Lex {
 
 
 
-	const char* del_probel(const char* s);
+	
 
 	struct Machines
 	{
@@ -305,16 +305,7 @@ namespace Lex {
 		IT::IdTable  idTable;
 	};
 
-
-	bool PolishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtable);
-	//void polish_notation(Lex::Tables td);
-
 	void Sem_analiz(Tables table);
-	Word_array Create_word(const char* s);
-
-	Tables Lex_analyz(const char* s);
 	Tables Lex_analyz_new(In::IN g);
-
-	In::IN Del_probel(In::IN g);
 	int ret_index_for_expression(int pos, std::vector<Lex::Par_function> par_func);
 }

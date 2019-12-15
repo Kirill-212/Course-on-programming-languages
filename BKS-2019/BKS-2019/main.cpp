@@ -154,32 +154,7 @@ int stringtoint(char* arr) {
 	cout << endl;
 	cout << endl;
 
-	//cout << endl;
-	//	char* iddatatype;
-	//	char* idtype;
-	//	cout << "----------------------------------------------------------------------------------------------------" << endl;
-	//	for (int i = 0; i < Tables.idTable.size; i++) {
-	//		//cout << endl;
-	//		switch (Tables.idTable.table[i].iddatatype) {
-	//		case IT::INT: { iddatatype = (char*)"integer"; break; }
-	//		case IT::STR: { iddatatype = (char*)"string";  break; }
-	//		default: iddatatype = (char*)"none"; break;
-	//		}
-	//		switch (Tables.idTable.table[i].idtype) {
-	//		case IT::F:{ idtype = (char*)"function"; break; }
-	//		case IT::L:{ idtype = (char*)"Literal";  break; }
-	//		case IT::P:{ idtype = (char*)"Parametr";  break; }
-	//		case IT::V: { idtype = (char*)"Var    ";  break; }
-	//		default: idtype = (char*)"none"; break;
-	//		}
-	//		    
-	//		if (Tables.idTable.table[i].iddatatype == IT::INT || Tables.idTable.table[i].idtype == IT::F) {
-	//			cout <<"|" <<Tables.idTable.table[i].id << "      \t" << iddatatype << "  \t\t" << idtype << "  \t\t" << Tables.idTable.table[i].value.vint << "                  \t\t" << Tables.idTable.table[i].idxfirstLE << endl;
-	//		}
-	//		else if (Tables.idTable.table[i].iddatatype == IT::STR) {
-	//			cout << "|" << Tables.idTable.table[i].id << "      \t" << iddatatype << "  \t\t" << idtype << "  \t\t" << Tables.idTable.table[i].value.vstr.str << "                \t\t" << Tables.idTable.table[i].idxfirstLE << endl;
-	//		}
-	//	}
+
 		
 	GEN::GetGeN((wchar_t *)L"C:\\ycheba\\main_kyrsovoi\\Course-on-programming-languages\\BKS-2019\\main_asm\\asm\\asm\\Project.asm", Tables);
 

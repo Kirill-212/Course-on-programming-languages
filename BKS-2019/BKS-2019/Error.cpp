@@ -31,7 +31,7 @@ namespace Error
 		ERROR_ENTRY(127, "Лексическая ошибка. Встречены идущие подряд арифметические знаки"),
 		ERROR_ENTRY(128, "Семантическая ошибка. Несовпадение фактических и формальных параметров функции"),
 		ERROR_ENTRY(129,"Семантическая ошибка.Нельзя применять арифметические операции."),
-		ERROR_ENTRY_NODEF10(130),ERROR_ENTRY_NODEF10(140),ERROR_ENTRY_NODEF10(150),
+		ERROR_ENTRY(130,"Лексическая ошибка.Неверная длинна идентификатора"),ERROR_ENTRY_NODEF10(140),ERROR_ENTRY_NODEF10(150),
 		ERROR_ENTRY_NODEF10(160),ERROR_ENTRY_NODEF10(170),ERROR_ENTRY_NODEF10(180),ERROR_ENTRY_NODEF10(190),
 		ERROR_ENTRY_NODEF100(200),ERROR_ENTRY_NODEF100(300),ERROR_ENTRY_NODEF100(400),ERROR_ENTRY_NODEF100(500),
 		ERROR_ENTRY(600, "Синтаксическая ошибка. Неверная структура программы"),
