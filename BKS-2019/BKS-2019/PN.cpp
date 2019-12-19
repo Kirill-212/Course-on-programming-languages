@@ -197,6 +197,9 @@ bool PN::PolishNotation1(int lextable_pos, LT::LexTable& lextable, IT::IdTable& 
 		}
 		lextable.table[i].idxTI = i;
 		lextable.table[i].lexema = '~';
+		if (lextable.table[end].lexema == ';') {
+			lextable.table[end].lexema = '~';
+		}
 	}
 	return 1;
 }
@@ -221,7 +224,7 @@ void PN::polish_notation(Lex::Tables td)
 				if ( td.LexTable.table[i + 2].lexema != ';') {
 					
 								flag=PN::PolishNotation1(i, td.LexTable, td.idTable);
-								cout << flag << endl;
+								
 								i = i + 1;
 					
 				}

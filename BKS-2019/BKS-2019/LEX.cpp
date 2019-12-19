@@ -24,7 +24,41 @@ int Lex::ret_index_for_expression(int pos, std::vector<Lex::Par_function> par_fu
 	
 }
 
+void Lex::chekDelaring(Lex::Tables td) {
+
+	for (int i = 0; i < td.LexTable.size;i++) {
+		int pos = 0;
+		if (td.LexTable.table[i].lexema == 'd') {
+			pos = i;
+			for (i=pos+3; i < td.LexTable.size; i++) {
+				if (td.LexTable.table[i].lexema == 'd') {
+					if (td.idTable.table[td.LexTable.table[pos + 2].idxTI].id == td.idTable.table[td.LexTable.table[i + 2].idxTI].id) {
+						Error::ERROR error = Error::geterrorin(120, td.LexTable.table[i].sn + 1, td.LexTable.table[i].indexLT);
+						throw error;
+						break;
+					}
+				}
+			}
+			i = pos + 3;
+		}
+		else if (td.LexTable.table[i].lexema == 'f') {
+			pos = i + 1;
+			for (i = pos + 3; i < td.LexTable.size; i++) {
+				if (td.LexTable.table[i].lexema == 'f') {
+					if (td.idTable.table[td.LexTable.table[pos ].idxTI].id == td.idTable.table[td.LexTable.table[i + 1].idxTI].id) {
+						Error::ERROR error = Error::geterrorin(120, td.LexTable.table[i].sn + 1, td.LexTable.table[i].indexLT);
+						throw error;
+					}
+				}
+			}
+			i = pos + 3;
+		}
+	}
+}
+
+
 void Lex::Sem_analiz(Lex::Tables table) {
+	Lex::chekDelaring(table);
 	Lex::Par_function par_function;
 	std::vector<Lex::Par_function> par_func;
 	int pos_in_vector = 0;
@@ -39,6 +73,7 @@ void Lex::Sem_analiz(Lex::Tables table) {
 	int m;
 	int q;
 	int count = 0;
+	int index1=0;
 	for (int i = 0; i < table.LexTable.size; i++) {
 
 		if (table.LexTable.table[i].lexema == 'f') {
@@ -49,13 +84,18 @@ void Lex::Sem_analiz(Lex::Tables table) {
 			flag_expression = false;
 		}
 		else if (table.LexTable.table[i].lexema == '?') {//ïðîâåðêà íà òèïû if
-
-			if (table.idTable.table[table.LexTable.table[i + 4].idxTI].iddatatype != IT::INT || table.idTable.table[table.LexTable.table[i + 2].idxTI].iddatatype != IT::INT) {
+			if (table.idTable.table[table.LexTable.table[i + 2].idxTI].iddatatype == IT::INT && table.LexTable.table[i + 3].lexema == ')') {
+				Error::ERROR error = Error::geterrorin(105, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
+				throw error;
+			}
+				if (table.idTable.table[table.LexTable.table[i + 4].idxTI].iddatatype != IT::INT || table.idTable.table[table.LexTable.table[i + 2].idxTI].iddatatype != IT::INT) {
 				if (table.LexTable.table[i+2].lexema != 'T' || table.LexTable.table[i+2].lexema != 'F') {
 					if (table.idTable.table[table.LexTable.table[i + 2].idxTI].iddatatype != IT::BOOL) {
-					Error::ERROR error = Error::geterrorin(119, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
+					//	std::cout << "ñîvvvvvvvvññ1";
+					Error::ERROR error = Error::geterrorin(105, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
 					throw error;
 					}
+					
 				}
 				
 			}
@@ -68,16 +108,23 @@ void Lex::Sem_analiz(Lex::Tables table) {
 			m = 0;
 			if (strcmp(table.idTable.table[table.LexTable.table[i].idxTI].id , "stringtoint")==0 || strcmp(table.idTable.table[table.LexTable.table[i].idxTI].id, "strlen1")==0 ) {
 
+				if (table.idTable.table[table.LexTable.table[i + 2].idxTI].idtype != IT::L) {
+					Error::ERROR error = Error::geterrorin(118, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
+					throw error;
+				}
 				
 				if (table.idTable.table[table.LexTable.table[pos_expression].idxTI].iddatatype != IT::INT) {
+					//std::cout << "ñîññ12222222";
 					Error::ERROR error = Error::geterrorin(118, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
 					throw error;
 				}
 				if (table.idTable.table[table.LexTable.table[i + 2].idxTI].iddatatype != IT::STR ) {
+					//std::cout << "ñîññ1";
 					Error::ERROR error = Error::geterrorin(118, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
 					throw error;
 				}
 				if (table.LexTable.table[i + 3].lexema != ')') {
+					//std::cout << "ñîññ111";
 					Error::ERROR error = Error::geterrorin(118, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
 					throw error;
 				}
@@ -88,68 +135,90 @@ void Lex::Sem_analiz(Lex::Tables table) {
 				//	cout << table.idTable.table[table.LexTable.table[pos_expression].idxTI].id << endl;
 					//cout << table.idTable.table[pos_in_vector].id << endl;
 				if (table.idTable.table[table.LexTable.table[pos_expression].idxTI].iddatatype != table.idTable.table[pos_in_vector].iddatatype) {
+					//std::cout << "ñîññ2";
 					Error::ERROR error = Error::geterrorin(117, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
 					throw error;
 				}
 
+				
 				for (; m < par_func.size(); m++) {
 					if (pos_in_vector == par_func[m].indxLT) {
 						break;
 					}
 				}
-				for (q = i + 1; i < table.LexTable.size; q++) {
-					if (par_func[m].type.size() < par_vs_funcr) {
 
-						Error::ERROR error = Error::geterrorin(118, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
+				index1 = par_func[m].type.size();
+				for (q = i + 1; i < table.LexTable.size; q++) {
+					if (table.LexTable.table[q + 1].lexema == ',' && 0 > index1) {
+						
+							//std::cout << "ñîdwqdwqdññ1";
+							Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
+							throw error;
+						
+					}
+					if ((table.LexTable.table[q].lexema == 'l'|| table.LexTable.table[q].lexema == 'F' || table.LexTable.table[q].lexema == 'T' || table.LexTable.table[q].lexema == 'i') && index1==0 ) {
+						Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
 						throw error;
 					}
-					if (table.LexTable.table[q].lexema == 'i') {
-						if (par_func[m].type.size() == par_vs_funcr) {
-
-							Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
-							throw error;
-						}
-						if (table.idTable.table[table.LexTable.table[q].idxTI].iddatatype != par_func[m].type[par_vs_funcr]) {//
-							Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
-							throw error;
-						}
-						else {
-							par_vs_funcr++;
-						}
-					}
-					else if (table.LexTable.table[q].lexema == 'l' || table.LexTable.table[q].lexema == 'T' || table.LexTable.table[q].lexema == 'F') {
-						if (par_func[m].type.size() == par_vs_funcr) {
-
-							Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
-							throw error;
-						}
-						if (table.idTable.table[table.LexTable.table[q].idxTI].iddatatype != par_func[m].type[par_vs_funcr]) {
-							Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
-							throw error;
-						}
-						else {
-							par_vs_funcr++;
-						}
-					}
-					else if (table.LexTable.table[q].lexema == ')') {
-						if (par_func[m].type.size() > par_vs_funcr) {
-
+					if (table.LexTable.table[q].lexema == ')') {
+						if (0!= index1) {
+							//std::cout << "ñîdwqdwqdññ1";
 							Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
 							throw error;
 						}
 						break;
 					}
+
+					//if (par_func[m].type.size() < index1) {
+					//	//std::cout << "ñîññ211";
+					//	Error::ERROR error = Error::geterrorin(118, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
+					//	throw error;
+					//}
+					if (table.LexTable.table[q].lexema == 'i') {
+						if (par_func[m].type.size() == index1) {
+							//std::cout << "ñ22îññ1";
+							Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
+							throw error;
+						}
+						if (table.idTable.table[table.LexTable.table[q].idxTI].iddatatype != par_func[m].type[index1-1]) {//
+							//std::cout << "ñddîññ1";
+							Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
+							throw error;
+						}
+						else {
+							index1--;
+						}
+					}
+					else if (table.LexTable.table[q].lexema == 'l' || table.LexTable.table[q].lexema == 'T' || table.LexTable.table[q].lexema == 'F') {
+						if (table.LexTable.table[q + 1].lexema == ',' && 0 > index1) {
+						
+								//std::cout << "ñîdwqdwqdññ1";
+								Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
+								throw error;
+							
+						}
+						if (table.idTable.table[table.LexTable.table[q].idxTI].iddatatype != par_func[m].type[index1-1]) {
+							//std::cout << "ñîdwqdqwññ1";
+							Error::ERROR error = Error::geterrorin(118, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
+							throw error;
+						}
+						else {
+							index1--;
+						}
+					}
+					
 					//par_vs_funcr++;
 				}
 
 				i = q;
 			}
-				par_vs_funcr = 0;
+				
 			
 		}
 		else if (flag_expression && table.LexTable.table[i].lexema == 'i' &&table.LexTable.table[i+1].lexema == 'v') {
 			for (q = i + 1; i < table.LexTable.size; q++) {
 				if (table.idTable.table[table.LexTable.table[q].idxTI].iddatatype != IT::INT) {
+					//std::cout << "ñîdwdwdññ1";
 					Error::ERROR error = Error::geterrorin(129, table.LexTable.table[q].sn + 1, table.LexTable.table[q].indexLT);
 					throw error;
 				}
@@ -162,11 +231,13 @@ void Lex::Sem_analiz(Lex::Tables table) {
 		else if (flag_expression && (table.LexTable.table[i].lexema == 'i'|| table.LexTable.table[i].lexema == 'T'|| table.LexTable.table[i].lexema == 'F'|| table.LexTable.table[i].lexema == 'l')) {
 			if (table.LexTable.table[i].lexema == 'F' || table.LexTable.table[i].lexema == 'T') {
 				if (table.idTable.table[table.LexTable.table[pos_expression].idxTI].iddatatype != IT::BOOL) {
+					//std::cout << "ñdwqqqqîññ1";
 					Error::ERROR error = Error::geterrorin(117, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
 					throw error;
 				}
 			}
 			else if (table.idTable.table[table.LexTable.table[pos_expression].idxTI].iddatatype != table.idTable.table[table.LexTable.table[i].idxTI].iddatatype) {
+				//std::cout << "ñvvvvîññ1";
 				Error::ERROR error = Error::geterrorin(117, table.LexTable.table[i].sn + 1, table.LexTable.table[i].indexLT);
 				throw error;
 			}
@@ -197,6 +268,7 @@ void Lex::Sem_analiz(Lex::Tables table) {
 			pos_function_for_r_i = i + 1;
 			 if (table.LexTable.table[pos_function_for_r_i].lexema == 'T') {
 				if (table.idTable.table[table.LexTable.table[pos_function_for_return].idxTI].iddatatype != IT::BOOL) {
+					//std::cout << "ñîqqqqqdwññ1";
 					Error::ERROR error = Error::geterrorin(116, table.LexTable.table[pos_function_for_r_i].sn+1, table.LexTable.table[pos_function_for_r_i].indexLT);
 					throw error;
 				}
@@ -204,7 +276,7 @@ void Lex::Sem_analiz(Lex::Tables table) {
 
 			else if (table.LexTable.table[pos_function_for_r_i].lexema == 'F') {
 				if (table.idTable.table[table.LexTable.table[pos_function_for_return].idxTI].iddatatype != IT::BOOL) {
-
+					//std::cout << "ñqqqqqqq1îññ1";
 					Error::ERROR error = Error::geterrorin(116, table.LexTable.table[pos_function_for_r_i].sn+1, table.LexTable.table[pos_function_for_r_i].indexLT);
 					throw error;
 				
@@ -212,7 +284,7 @@ void Lex::Sem_analiz(Lex::Tables table) {
 			}
 
 			else if (table.idTable.table[table.LexTable.table[pos_function_for_return].idxTI].iddatatype != table.idTable.table[table.LexTable.table[pos_function_for_r_i].idxTI].iddatatype) {
-				
+				 //std::cout << "ñîccccccññ1";
 				Error::ERROR error = Error::geterrorin(116, table.LexTable.table[pos_function_for_r_i].sn+1, table.LexTable.table[pos_function_for_r_i].indexLT);
 				throw error;
 			}
@@ -231,7 +303,7 @@ void Lex::Sem_analiz(Lex::Tables table) {
 
 
 
-
+	
 
 }
 
@@ -326,7 +398,7 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 	bool flag_error = false;
 	int  vs_func = 0;
 	//
-	
+	bool flag_if = false;
 	int index_lit = 0;
 	int indexIT = -1;
 	IT::IDDATATYPE iddatatype = IT::NODEF;
@@ -394,11 +466,26 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 		}//
 		else if (in.code[in.text[i]] == in.S) {
 
-			if (in.text[i] == '-' &&in.text[i + 1] == '-') {
+			if ((in.text[i] == '-' || in.text[i] == '*'|| in.text[i] == '+'|| in.text[i] == '/'|| in.text[i] == '%')&&in.text[i + 1] == '-') {
 				flag_mines = true;
 				word[word_it] = in.text[i];
 				i++;
 				word_it++;
+			}
+			else if (in.text[i-1] == '=' && in.text[i] == '-') {
+
+				word[word_it] = in.text[i];
+				i++;
+				word_it++;
+				while (in.code[in.text[i]] != in.S && in.code[in.text[i]] != in.P)
+				{
+					if (in.text[i] == '%' || in.text[i] == '*' || in.text[i] == '-' || in.text[i] == '+' || in.text[i] == '/') {
+						break;
+					} 
+					word[word_it] = in.text[i];
+					i++;
+					word_it++;
+				}
 			}
 			else if (in.text[i] == '-' && (machines[m].lexema == '=' || machines[m].lexema == '-' || machines[m].lexema == '+' || machines[m].lexema == '*' || machines[m].lexema == '=' || machines[m].lexema == '/' || machines[m].lexema == '%' || machines[m].lexema == '=='
 				    || machines[m].lexema == '=' || machines[m].lexema == ')' || machines[m].lexema == '(' || machines[m].lexema == 'r')) {
@@ -463,7 +550,7 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 			flag_in_word = true;
 			//sn++;
 			pos_LT++;
-			cout << word <<"|";
+			//cout << word <<"|";
 		}
 		if (flag_in_word) {
 			LT::Entry lt;
@@ -500,6 +587,16 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 				else {
 					flag_error = false;
 				}
+			}
+			if (machines[m].lexema == '?') {
+				flag_if = true;
+			}
+			else if (flag_if&&machines[m].lexema == '?') {
+				Error::ERROR error = Error::geterrorin(106, indexLT + 1, pos_LT);
+				throw error;
+			}
+			if (!flag_if &&machines[m].lexema == '}') {
+				flag_if = false;
 			}
 			if (strcmp(word, "int") == 0)iddatatype = IT::INT;
 			else if (strcmp(word, "string") == 0)iddatatype = IT::STR;
@@ -596,6 +693,7 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 				}
 			}
 			else if (machines[m].lexema == 'i') {
+				
 				if (!st.empty()) {
 					if (strcmp(word, LibFunc[0]) == 0 ) {
 						IT::Entry it = { LexTable.size, word , IT::INT, IT::F, 0 };

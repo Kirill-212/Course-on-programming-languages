@@ -1,0 +1,96 @@
+C:\ycheba\main_kyrsovoi\Course-on-programming-languages\test_project
+
+
+
+
+ int function fs(int sqw,int qds){
+	dec int sss;
+	sss=stringtoint('4');
+	sss=strlen('424');
+dec int ss1s;
+ss1s=(sss)--1;
+sss=-4;
+	if(3==4){
+	dec int s2trr;
+};
+	 dec int z;
+	 z= sqw*( qds + 4 );
+	 return 4;
+	
+	};
+int function fs21(int sfff,int qsssq){
+	
+	 dec int z;
+	dec int sms1;
+dec string sms5;
+dec string sms4;
+	z=3;
+	sms1=fs(3,4)+22;
+	 z= sfff*( qsssq + sfff );
+	 return 4;
+	
+	};
+
+
+  bool function sb(string svvv,string str2){
+		dec int qw;
+qw=fs21(3,4);
+	dec bool fst1;
+	 if(fst1){
+	dec int swe;
+	};
+	return false;
+	
+	};
+int function qs(int s,int q){
+	dec bool rc;
+	rc=true;
+	return 1;
+};
+
+int function q1s(bool saaq,int qaaqe){
+	dec bool rc;
+	dec int m;
+	m=10;
+	return m;
+};
+
+	main{	
+	  dec	int num;
+	num=04646o;
+
+	dec int col;
+	col=12345;
+	dec bool fswr;
+	fswr=true;
+	dec string lit;
+	lit='214224521';
+	dec string lit1;
+	lit1='control example';
+
+	dec int lent;
+	lent=1;
+
+	dec int sa;
+	dec string str4;
+	str4='12345';
+	sa=3+10/1;
+
+	dec int res;
+	res=sa-col;
+
+	print(res);
+	print(str4);
+	dec bool fst3;
+	fst3=true;
+
+	if(res==col){
+
+	print(col);
+
+	};
+
+dec int years;
+
+
+	};

@@ -1,18 +1,15 @@
+ int function posin1(string sms1,int qqq1){
 
-
- int function pos(int sss,int qqq){
-
-dec int res;
-	res=sss*10+qqq;
-	return res;
-
-};
-
- int function pow(int sss1,int qqq1,int res1){
-
-dec int res2;
-	res2=(sss1+qqq1)*res1;
-	return res2;
+	dec int res1;
+	if(3==3){
+	print(sms1);
+	
+	};
+	res1=stringtoint('32')/2;
+	print(res1);
+	res1=59%qqq1;
+	print(res1);
+	return res1;
 
 };
 
@@ -20,45 +17,8 @@ dec int res2;
 
 main{
 
-dec string str1;
-str1='frts';
-print(str1);
-dec int col1;
-dec int num;
-num=pow(5,2,1);
-print(num);
-num=stringtoint('1234')--1000;
-print(num);
-num=002212;
-col1=num-1;
-print(num);
-print(col1);
-num=strlen1('3df')-1 ;
-print(num);
-num=pos(1,3);
-print(num);
-num=strlen1('frr');
-print(num);
-num=59%6;
-print(num);
-num=10--1;
-print(num);
-num=10*4;
-print(num);
-num=10/2;
-print(num);
 dec int col;
-col=pos(3,2);
+col=posin1(6,'3');
 print(col);
-print('hello');
-
-if(true){
-	print('hello');
-	};
-	if(true){
-	print('hello world');
-	};
-
-num=(10--9)*2-40;
-print(num);
+print('end');
 };

@@ -168,26 +168,31 @@ namespace MFST
 		//NS_OK,				// найдено правило и цепочка, цепочка записана в стек
 		//NS_NORULECHAIN,		// не найдена подходящая цепочка правила (ошибка в исходном коде)
 		//TS_OK,				// тек. символ ленты == вершине стека, продвинулась лента, pop стека
-		//TS_NOK,				// тек. символ ленты != вершине стека, восстановлено состояние
+		//TS_NOK,				// тек. символ ленты != вершине стека, восстановлено состояние,
 
 		switch (rc_step)
 		{
 		case LENTA_END:			MFST_TRACE4("------>LENTA_END")
-			
-
+			if (st.top() == '$')
+			{
 				cout << "--------------------------------------------------------------------------" << endl;
 				sprintf_s(buf, MFST_DIAGN_MAXSIZE, "%d всего строк %d, синтаксический анализ выполнен без ошибок", 0, lenta_size);
 				cout << setw(4) << left << 0 << ": всего строк " << lenta_size << ", синтаксический анализ выполнен без ошибок" << endl;
 				cout << "--------------------------------------------------------------------------" << endl;
 				rc = true;
-			
-			break;
+			}
+			else
+			{
+				throw Error::geterrorin(600, 0, 0);
+			}
+								//}
+								break;
 
 		case NS_NORULE:			MFST_TRACE4("------>NS_NURULE")// не найдено правило грамматики (ошибка в грамматике)
 			cout << "--------------------------------------------------------------------------" << endl;
 			cout << getDiagnosis(0, buf) << endl;
-			//cout << getDiagnosis(1, buf) << endl;
-			//cout << getDiagnosis(2, buf) << endl;
+			throw Error::geterrorin(600, 0, 0);
+
 			break;
 		case NS_NORULECHAIN:	MFST_TRACE4("------>NS_NURULENORULECHAIN") break;// не найдена подходящая цепочка правила (ошибка в исходном коде)
 		case NS_ERROR:			MFST_TRACE4("------>NS_ERROR") break;// неизвестный нетерминальный символ грамматики
@@ -223,7 +228,7 @@ namespace MFST
 		if (n < MFST_DIAGN_NUMBER && (lpos = diagnosis[n].lenta_position) >= 0)
 		{
 			errid = grebach.getRule(diagnosis[n].nrule).iderror;
-			Error::ERROR err = Error::geterror(errid);//создание ошибки
+			Error::ERROR err = Error::geterror(errid);
 			sprintf_s(buf, MFST_DIAGN_MAXSIZE, "%d: строка %d, %s", err.id, lex.LexTable.table[lpos].sn, err.message);
 			rc = buf;
 		};

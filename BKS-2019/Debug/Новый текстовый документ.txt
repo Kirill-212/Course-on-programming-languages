@@ -1,0 +1,1 @@
+BKS-2019 -in:C:\ycheba\main_kyrsovoi\Course-on-programming-languages\test_project\test1.txt

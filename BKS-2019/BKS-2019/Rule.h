@@ -16,13 +16,11 @@ namespace GRB
 		),
 
 		Rule(NS('N'), GRB_ERROR_SERIES + 1,					// Ошибочный оператор
-			10,
+			8,
 			Rule::Chain(4, TS('d'), TS('t'), TS('i'), TS(';')),
 			Rule::Chain(4, TS('i'), TS('='), NS('E'), TS(';')),
 			Rule::Chain(5, TS('d'), TS('t'), TS('i'), TS(';'),NS('N')),
 			Rule::Chain(5, TS('i'), TS('='), NS('E'), TS(';'), NS('N')),
-			Rule::Chain(5, TS('d'), TS('t'), TS('i'), TS(';'), NS('N')),
-			Rule::Chain(9, TS('d'), TS('t'), TS('f'), TS('i'), TS('('), NS('F'), TS(')'), TS(';'), NS('N')),
 			Rule::Chain(5, TS('p'),TS('('), NS('P'), TS(')'), TS(';')),
 			Rule::Chain(6, TS('p'), TS('('), NS('P'), TS(')'), TS(';'), NS('N')),
 			Rule::Chain(9, TS('?'), TS('('), NS('Q'), TS(')'), TS('{'), NS('N'), TS('}'), TS(';'), NS('N')),

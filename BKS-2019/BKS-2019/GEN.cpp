@@ -37,6 +37,7 @@ void GEN::FixID(Lex::Tables& tables)
 
 void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 	int i = 0;
+	int flag = 0;
 	GEN::Gen_text Gen_txt;
 	bool par_flag = true;
 	bool function_flag = false;
@@ -116,10 +117,12 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 
 
 	for (i = 0; i < td.LexTable.size; i++) {
+
 		if (!flag_if &&flag_main&& td.LexTable.table[i].lexema == '}') {
 			break;
 		}
 		if (td.LexTable.table[i].lexema == '?') {
+			flag++;
 			flag_if = true;
 			flag_if_one++;
 		}
@@ -458,7 +461,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 						}
 						else if (td.LexTable.table[i].lexema == 'l' || td.LexTable.table[i].lexema == 'i') {//i=l+...;						
 							if (td.idTable.table[td.LexTable.table[i].idxTI].iddatatype == IT::STR) {
-								Gen_txt.CODE += " push bks \n";
+								//Gen_txt.CODE += " push bks \n";
 								Gen_txt.CODE += "PUSH offset ";
 								Gen_txt.CODE += td.idTable.table[td.LexTable.table[i].idxTI].id;
 								Gen_txt.CODE += " \n";
@@ -479,7 +482,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 								Gen_txt.CODE += "POP AX\n";
 								Gen_txt.CODE += "POP AX\n";
 								Gen_txt.CODE += "ADD AX , BX \n";
-								Gen_txt.CODE += " push bks \n";
+							//	Gen_txt.CODE += " push bks \n";
 								Gen_txt.CODE += "PUSH AX \n ";
 
 							}
@@ -488,7 +491,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 								Gen_txt.CODE += "POP AX\n";
 								Gen_txt.CODE += "POP AX\n";
 								Gen_txt.CODE += "SUB AX , BX \n";
-								Gen_txt.CODE += " push bks \n";
+							//	Gen_txt.CODE += " push bks \n";
 								Gen_txt.CODE += "PUSH AX \n";
 
 							}
@@ -497,7 +500,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 								Gen_txt.CODE += "POP AX\n";
 								Gen_txt.CODE += "POP AX\n";
 								Gen_txt.CODE += "MUL BX \n";
-								Gen_txt.CODE += " push bks \n";
+								//Gen_txt.CODE += " push bks \n";
 								Gen_txt.CODE += "PUSH AX \n";
 
 							}
@@ -519,7 +522,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 								Gen_txt.CODE += "CDQ \n";
 								Gen_txt.CODE += "IDIV BX \n";
 								Gen_txt.CODE += "MOV AX,DX \n";
-								Gen_txt.CODE += " push bks \n";
+								//Gen_txt.CODE += " push bks \n";
 								Gen_txt.CODE += "PUSH AX  \n";
 
 							}
@@ -581,7 +584,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 						}
 						else if (td.LexTable.table[i].lexema == 'l' || td.LexTable.table[i].lexema == 'i') {//i=l+...;						
 							if (td.idTable.table[td.LexTable.table[i].idxTI].iddatatype == IT::STR) {
-								Gen_txt.MAIN += " push bks \n";	
+							//	Gen_txt.MAIN += " push bks \n";	
 								Gen_txt.MAIN += "PUSH offset ";
 								Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i].idxTI].id;
 								Gen_txt.MAIN += " \n";
@@ -602,7 +605,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 								Gen_txt.MAIN += "POP AX\n";
 								Gen_txt.MAIN += "POP AX\n";
 								Gen_txt.MAIN += "ADD AX , BX \n";
-								Gen_txt.MAIN += " push bks \n";
+							//	Gen_txt.MAIN += " push bks \n";
 								Gen_txt.MAIN += "PUSH AX \n ";
 								
 							}
@@ -611,7 +614,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 								Gen_txt.MAIN += "POP AX\n";
 								Gen_txt.MAIN += "POP AX\n";
 								Gen_txt.MAIN += "SUB AX , BX \n";
-								Gen_txt.MAIN += " push bks \n";
+							//	Gen_txt.MAIN += " push bks \n";
 								Gen_txt.MAIN += "PUSH AX \n";
 								
 							}
@@ -620,7 +623,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 								Gen_txt.MAIN += "POP AX\n";
 								Gen_txt.MAIN += "POP AX\n";
 								Gen_txt.MAIN += "MUL BX \n";
-								Gen_txt.MAIN += " push bks \n";
+							//	Gen_txt.MAIN += " push bks \n";
 								Gen_txt.MAIN += "PUSH AX \n";
 								
 							}
@@ -642,7 +645,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 								Gen_txt.MAIN += "CDQ \n";
 								Gen_txt.MAIN += "IDIV BX \n";
 								Gen_txt.MAIN += "MOV AX,DX \n";
-								Gen_txt.MAIN += " push bks \n";
+							//	Gen_txt.MAIN += " push bks \n";
 								Gen_txt.MAIN += "PUSH AX  \n";
 								
 							}
@@ -670,29 +673,38 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 					Gen_txt.CODE += "\n;print \n";
 					Gen_txt.CODE += "push ";
 					Gen_txt.CODE += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-					Gen_txt.CODE += "\n call ConsoleBool \n";
+					Gen_txt.CODE += "\n  ";
+					Gen_txt.CODE += " call ";
+					Gen_txt.CODE += "call ConsoleBool \n";
 					i = i + 3;
 				}
 				else if (td.idTable.table[td.LexTable.table[i + 2].idxTI].iddatatype == IT::INT) {
 					Gen_txt.CODE += "\n;print \n";
 					Gen_txt.CODE += "push ";
 					Gen_txt.CODE += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-					Gen_txt.CODE += "\n ConsoleInt \n";
+					Gen_txt.CODE += "\n ";
+					Gen_txt.CODE += " call ";
+					Gen_txt.CODE += " ConsoleInt \n";
 					i = i + 3;
 				}
 				else if (td.idTable.table[td.LexTable.table[i + 2].idxTI].iddatatype == IT::STR) {
+
 					if (td.LexTable.table[i + 2].lexema == 'l') {
 						Gen_txt.CODE += "\n;print \n";
 						Gen_txt.CODE += "push offset ";
 						Gen_txt.CODE += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-						Gen_txt.CODE += "\n ConsoleStr \n";
+						Gen_txt.CODE += "\n  ";
+						Gen_txt.CODE += " call ";
+						Gen_txt.CODE+= " ConsoleStr \n";
 						i = i + 3;
 					}
 					else if (td.LexTable.table[i + 2].lexema == 'i') {
 						Gen_txt.CODE += "\n;print \n";
 						Gen_txt.CODE += "push  ";
 						Gen_txt.CODE += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-						Gen_txt.CODE += "\n ConsoleStr \n";
+						Gen_txt.CODE += "\n  ";
+						Gen_txt.CODE += "call ";
+						Gen_txt.CODE += " ConsoleStr \n";
 						i = i + 3;
 					}
 				}
@@ -703,14 +715,18 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 					Gen_txt.MAIN += "\n;print \n";
 					Gen_txt.MAIN += "push ";
 					Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-					Gen_txt.MAIN += "\n call ConsoleBool \n";
+					Gen_txt.MAIN += "\n ";
+					Gen_txt.MAIN += " call ";
+					Gen_txt.MAIN += " ConsoleBool \n";
 					i = i + 3;
 				}
 				else if (td.idTable.table[td.LexTable.table[i + 2].idxTI].iddatatype == IT::INT) {
 					Gen_txt.MAIN += "\n;print \n";
 					Gen_txt.MAIN += "push ";
 					Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-					Gen_txt.MAIN += "\n call ConsoleInt \n";
+					Gen_txt.MAIN += "\n ";
+					Gen_txt.MAIN += " call ";
+					Gen_txt.MAIN += " ConsoleInt \n";
 					i = i + 3;
 				}
 				else if (td.idTable.table[td.LexTable.table[i + 2].idxTI].iddatatype == IT::STR) {
@@ -718,14 +734,18 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 						Gen_txt.MAIN += "\n;print \n";
 						Gen_txt.MAIN += "push offset ";
 						Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-						Gen_txt.MAIN += "\n call ConsoleStr \n";
+						Gen_txt.MAIN += "\n  ";
+						Gen_txt.MAIN += " call ";
+						Gen_txt.MAIN += " ConsoleStr \n";
 						i = i + 3;
 					}
 					else if (td.LexTable.table[i + 2].lexema == 'i') {
 						Gen_txt.MAIN += "\n;print \n";
 						Gen_txt.MAIN += "push  ";
 						Gen_txt.MAIN += td.idTable.table[td.LexTable.table[i + 2].idxTI].id;
-						Gen_txt.MAIN += "\n  call ConsoleStr \n";
+						Gen_txt.MAIN += "\n  ";
+						Gen_txt.MAIN += " call ";
+						Gen_txt.MAIN += " ConsoleStr \n";
 						i = i + 3;
 					}
 				}
@@ -765,7 +785,7 @@ void GEN::GetGeN(wchar_t* file, Lex::Tables td) {
 					}
 					else if (td.idTable.table[td.LexTable.table[i].idxTI].iddatatype == IT::STR) {
 						//Gen_txt.CODE += td.idTable.table[td.LexTable.table[i ].idxTI].id;
-						Gen_txt.CODE += ": DB";
+						Gen_txt.CODE += ": dword";
 						if (td.LexTable.table[i + 1].lexema == ')') {
 							par_flag = false;
 							break;
