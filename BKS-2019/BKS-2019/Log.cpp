@@ -10,7 +10,7 @@
 #include <string.h>
 #include "Parm.h"
 #include <iostream>
-
+#include"Lex.h"
 namespace Log
 {
 	LOG getlog(wchar_t logfile[])

@@ -27,7 +27,10 @@ L4	 sword  	2
 L5	 sword  	59
 L6	 sword  	6
 L7	 DB  	'3' , 0
-L8	 DB  	'end' , 0
+L8	 sword  	20000
+L9	 sword  	2000000
+L10	 DB  	'3ed' , 0
+L11	 DB  	'end' , 0
 
 .DATA
 
@@ -119,9 +122,41 @@ MOV col_main , AX
 ;print 
 push col_main
   call  ConsoleInt 
+MOV BX , 0 
+MOV AX , 0 
+ push bks 
+PUSH L8 
+ push bks 
+PUSH L9 
+POP BX
+POP AX
+POP AX
+ADD AX , BX 
+PUSH AX 
+ MOV AX , 0
+POP AX
+MOV col_main , AX
+
 
 ;print 
-push offset L8
+push col_main
+  call  ConsoleInt 
+MOV BX , 0 
+MOV AX , 0 
+PUSH offset L10 
+call strlen1
+ push AX 
+ MOV AX , 0
+POP AX
+MOV col_main , AX
+
+
+;print 
+push col_main
+  call  ConsoleInt 
+
+;print 
+push offset L11
    call  ConsoleStr 
 
 push 0

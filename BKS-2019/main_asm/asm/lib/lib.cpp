@@ -38,7 +38,9 @@ extern "C" {
 
 	
 	int strlen1(char* arr) {
-		
+		if (arr == NULL) {
+			return 0;
+		}
 		int res = std::strlen(arr);
 		return res;
 	}

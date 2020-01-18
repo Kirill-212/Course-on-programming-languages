@@ -20,5 +20,9 @@ main{
 dec int col;
 col=posin1(6,'3');
 print(col);
+col=20;
+print(col);
+col=strlen1('3ed');
+print(col);
 print('end');
 };

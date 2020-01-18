@@ -1,0 +1,23 @@
+INT		FUNCTION				posin1
+STR		PARAMETR				sms1_posin1
+INT		PARAMETR				qqq1_posin1
+INT		VARIABLE				res1_posin1
+INT		LITERAL				L1
+INT		LITERAL				L2
+INT		FUNCTION				stringtoint
+STR		LITERAL				L3
+INT		LITERAL				L4
+INT		LITERAL				L5
+INT		VARIABLE				col_main
+INT		LITERAL				L6
+STR		LITERAL				L7
+INT		LITERAL				L8
+INT		LITERAL				L9
+INT		FUNCTION				strlen1
+STR		LITERAL				L10
+STR		LITERAL				L11
+Тест:без ошибок---- Протокол ------ 20.12.2019 19:16:20 -------------
+---- Параметры ------
+-log: C:\ycheba\main_kyrsovoi\Course-on-programming-languages\test_project\test1.txt.log
+-out: C:\ycheba\main_kyrsovoi\Course-on-programming-languages\test_project\test1.txt.out
+-in: C:\ycheba\main_kyrsovoi\Course-on-programming-languages\test_project\test1.txt

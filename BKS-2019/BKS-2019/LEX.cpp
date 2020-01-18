@@ -435,6 +435,10 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 			flag_error = true;
 		}
 		else if (in.text[i] == '\'') {
+			if (in.text[i] == '\'' && in.text[i + 1] == '\'') {
+				Error::ERROR error = Error::geterrorin(107, indexLT + 1, pos_LT);
+				throw error;
+			}
 			word[word_it] = in.text[i];
 			word_it++;
 			i++;
@@ -447,6 +451,7 @@ Lex::Tables Lex::Lex_analyz_new(In::IN in) {
 			else {
 				while (in.text[i] != '\'')
 				{
+					
 					word[word_it] = in.text[i];
 					word_it++;
 					i++;

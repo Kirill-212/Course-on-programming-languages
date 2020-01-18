@@ -16,7 +16,7 @@ namespace Error
 			ERROR_ENTRY(100, "Параметр -in должен быть задан"),
 			ERROR_ENTRY_NODEF(101), ERROR_ENTRY_NODEF(102), ERROR_ENTRY_NODEF(103),
 			ERROR_ENTRY(104, "Превышенна длинна входного параметра"),
-			ERROR_ENTRY(105,"Семантический анализ.Нельзя передавать данный тип данных в конструкцию if "), ERROR_ENTRY(106,"Лексический анализ.if вложенны не может быть"), ERROR_ENTRY_NODEF(107), ERROR_ENTRY_NODEF(108), ERROR_ENTRY_NODEF(109),
+			ERROR_ENTRY(105,"Семантический анализ.Нельзя передавать данный тип данных в конструкцию if "), ERROR_ENTRY(106,"Лексический анализ.if вложенны не может быть"), ERROR_ENTRY(107,"Лексический анализ.Нельзя создать строку NULL"), ERROR_ENTRY_NODEF(108), ERROR_ENTRY_NODEF(109),
 			ERROR_ENTRY(110, "Ошибка при открытии файла с исходным кодом (-in)"),
 			ERROR_ENTRY(111, "Недопустимый символ в исходном файле (-in)"),
 			ERROR_ENTRY(112, "Ошибка при создании файла протокола (-log)"),

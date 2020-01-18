@@ -1,2 +1,3 @@
 ﻿  Assembling Project.asm...
-  asm.vcxproj -> C:\ycheba\main_kyrsovoi\Course-on-programming-languages\BKS-2019\main_asm\asm\Debug\asm.exe
+Project.asm(31): error A2071: initializer magnitude too large for specified size
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\BuildCustomizations\masm.targets(69,5): error MSB3721: выход из команды "ml.exe /c /nologo /Zi /Fo"Debug\Project.obj" /W3 /errorReport:prompt  /TaProject.asm" с кодом "1".
